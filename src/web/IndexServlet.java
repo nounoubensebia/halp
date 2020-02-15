@@ -3,6 +3,7 @@ package web;
 import ejb.ServiceBean;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,8 @@ public class IndexServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.getWriter().append(serviceBean.getAll().get(0).getLongDescription());
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("test.jsp");
+        req.setAttribute("chkoupi","chkoupi");
+        requestDispatcher.forward(req,resp);
     }
 }
