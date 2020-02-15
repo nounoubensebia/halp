@@ -35,4 +35,10 @@ public class ServiceBean {
         return allQuery.getResultList();
     }
 
+    public Service getServiceById(long id)
+    {
+        EntityManager entityManager = getEntityManager();
+        return entityManager.find(Service.class,id);
+    }
+
 }
