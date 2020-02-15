@@ -1,4 +1,6 @@
-<%@ page import="javax.ejb.EJB" %><%--
+<%@ page import="javax.ejb.EJB" %>
+<%@ page import="data.Service" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: noure
   Date: 15/02/2020
@@ -9,6 +11,8 @@
 <html>
   <head>
     <%
+
+
     %>
     <title>$Title$</title>
   </head>
