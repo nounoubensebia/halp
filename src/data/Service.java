@@ -6,7 +6,11 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Service {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
+
     private User user;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
@@ -29,6 +33,7 @@ public class Service {
     }
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
         return id;
     }
@@ -123,5 +128,22 @@ public class Service {
 
     public void setOffer(boolean offer) {
         isOffer = offer;
+    }
+
+    public Service(User user, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime creationDate, String shortDescription, String longDescription, boolean isOffer, int status, Location location, ServiceType serviceType, ServiceNature serviceNature) {
+        this.user = user;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.creationDate = creationDate;
+        this.shortDescription = shortDescription;
+        this.longDescription = longDescription;
+        this.isOffer = isOffer;
+        this.status = status;
+        this.location = location;
+        this.serviceType = serviceType;
+        this.serviceNature = serviceNature;
+    }
+
+    public Service() {
     }
 }

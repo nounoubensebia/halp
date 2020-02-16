@@ -16,14 +16,11 @@ import java.util.List;
 
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class ServiceBean {
+public class ServiceBean extends Repository<Service> {
 
-    private EntityManager getEntityManager()
-    {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("JSFTest");
-        return emf.createEntityManager();
-    }
 
+
+    @Override
     public List<Service> getAll()
     {
         EntityManager em = getEntityManager();
@@ -35,10 +32,36 @@ public class ServiceBean {
         return allQuery.getResultList();
     }
 
-    public Service getServiceById(long id)
+    @Override
+    public Service findById(long id)
     {
         EntityManager entityManager = getEntityManager();
         return entityManager.find(Service.class,id);
+    }
+
+    @Override
+    public void save(Service service)
+    {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.persist(service.getLocation());
+        if (service.getServiceNature().getNatureIfOther()!=null)
+        {
+            em.persist(service.getServiceNature());
+        }
+        em.persist(service);
+        em.getTransaction().commit();
+    }
+
+    @Override
+    public void deleteById(long id)
+    {
+        //TODO check cascade
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        Service service = em.find(Service.class,id);
+        em.remove(service);
+        em.getTransaction().commit();
     }
 
 }

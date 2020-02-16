@@ -5,6 +5,9 @@ import java.util.List;
 
 @Entity
 public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String email;
     private String firstName;
@@ -13,6 +16,22 @@ public class User {
     private String phone;
     private String password;
     private boolean isAdmin;
+
+
+    public User() {
+    }
+
+    public User(String email, String firstName, String lastName, String userName, String phone,
+                String password, boolean isAdmin, Address address) {
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = userName;
+        this.phone = phone;
+        this.password = password;
+        this.isAdmin = isAdmin;
+        this.address = address;
+    }
 
     @OneToMany
     private List<Service> services;
