@@ -13,3 +13,11 @@
 <link href="${pageContext.request.contextPath}/Template/css/mdb.min.css" rel="stylesheet">
 <!-- Your custom styles (optional) -->
 <link href="${pageContext.request.contextPath}/Template/css/style.min.css" rel="stylesheet">
+
+<!-- DataTables CSS -->
+<link href="${pageContext.request.contextPath}/Template/css/addons/datatables.min.css" rel="stylesheet">
+
+<!-- DataTables Select CSS -->
+<link href="${pageContext.request.contextPath}/Template/css/addons/datatables-select.min.css" rel="stylesheet">
+
+

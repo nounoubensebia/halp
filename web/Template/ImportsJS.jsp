@@ -15,6 +15,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/Template/js/bootstrap.min.js"></script>
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/Template/js/mdb.min.js"></script>
+<!-- DataTables JS -->
+<script src="${pageContext.request.contextPath}/Template/js/addons/datatables.min.js" type="text/javascript"></script>
+<!-- DataTables Select JS -->
+<script src="${pageContext.request.contextPath}/Template/js/addons/datatables-select.min.js" type="text/javascript"></script>
 <!-- Initializations -->
 <script type="text/javascript">
     // Animations initialization
@@ -229,4 +233,11 @@
         }
     });
 
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+    });
 </script>
