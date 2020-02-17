@@ -2,6 +2,7 @@ package web;
 
 import data.Address;
 import data.User;
+import ejb.TransactionException;
 import ejb.UserBean;
 
 import javax.ejb.EJB;
@@ -44,17 +45,24 @@ public class EditAccountController extends HttpServlet {
         user.getAddress().setCity(city);
         user.getAddress().setSupplement(supplement);
 
-        userBean.update(user);
-        RequestDispatcher rd = req.getRequestDispatcher("Template/dashboard.html");
-        rd.forward(req,resp);
+        try {
+            userBean.update(user);
+            RequestDispatcher rd = req.getRequestDispatcher("Template/dashboard.html");
+            rd.forward(req,resp);
+        } catch (TransactionException e) {
+           resp.sendError(500);
+        }
     }
 
     @Override
     protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getUser(req,userBean);
 
-        userBean.deleteById(user.getId());
-
-        Utils.deleteUser(req,userBean);
+        try {
+            userBean.deleteById(user.getId());
+            Utils.deleteUser(req,userBean);
+        } catch (TransactionException e) {
+            resp.sendError(500);
+        }
     }
 }

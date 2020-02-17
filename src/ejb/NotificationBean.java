@@ -34,19 +34,35 @@ public class NotificationBean extends Repository<Notification> {
     }
 
     @Override
-    public void save(Notification notification) {
-        EntityManager entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(notification);
-        entityManager.getTransaction().commit();
+    public void save(Notification notification) throws TransactionException {
+        try {
+            EntityManager entityManager = getEntityManager();
+            entityManager.getTransaction().begin();
+            entityManager.persist(notification);
+            entityManager.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(long id) throws TransactionException {
+        try {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         Notification notification = em.find(Notification.class,id);
         em.remove(notification);
         em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 }

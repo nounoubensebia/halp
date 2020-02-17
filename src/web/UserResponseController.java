@@ -4,6 +4,7 @@ import data.Service;
 import data.User;
 import data.UserResponse;
 import ejb.ServiceBean;
+import ejb.TransactionException;
 import ejb.UserBean;
 import ejb.UserResponseBean;
 
@@ -42,7 +43,11 @@ public class UserResponseController extends HttpServlet {
         }
 
         UserResponse userResponse = new UserResponse(service,user,dateTime,message);
-        userResponseBean.save(userResponse);
+        try {
+            userResponseBean.save(userResponse);
+        } catch (TransactionException e) {
+            resp.sendError(500);
+        }
         //TODO redirect to notifications page
         resp.sendRedirect("notifications");
     }

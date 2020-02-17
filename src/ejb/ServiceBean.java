@@ -45,35 +45,42 @@ public class ServiceBean extends Repository<Service> {
     }
 
     @Override
-    public void save(Service service)
+    public void save(Service service) throws TransactionException
     {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.persist(service.getLocation());
-        if (service.getServiceNature().isOther())
-        {
-            em.persist(service.getServiceNature());
-        }
-        em.persist(service);
-        String message = "L'utilisateur "+service.getUser().getUserName()+" a créé une nouvelle";
-        if (service.isOffer())
-        {
-            message+= " offre de service";
-        }
-        else
-        {
-            message+= " demande de service";
-        }
-        message+=" ayant pour référence "+service.getReference();
-        for (User admin:getAdmins(em))
-        {
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(service.getLocation());
+            if (service.getServiceNature().isOther())
+            {
+                em.persist(service.getServiceNature());
+            }
+            em.persist(service);
+            String message = "L'utilisateur "+service.getUser().getUserName()+" a créé une nouvelle";
+            if (service.isOffer())
+            {
+                message+= " offre de service";
+            }
+            else
+            {
+                message+= " demande de service";
+            }
+            message+=" ayant pour référence "+service.getReference();
+            for (User admin:getAdmins(em))
+            {
 
-            ServiceValidationNotification serviceValidationNotification = new ServiceValidationNotification(
-                    admin,LocalDateTime.now(),message,service);
-            em.persist(serviceValidationNotification);
-        }
+                ServiceValidationNotification serviceValidationNotification = new ServiceValidationNotification(
+                        admin,LocalDateTime.now(),message,service);
+                em.persist(serviceValidationNotification);
+            }
 
-        em.getTransaction().commit();
+            em.getTransaction().commit();
+        } catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
     public List<User> getAdmins(EntityManager em)
@@ -95,71 +102,103 @@ public class ServiceBean extends Repository<Service> {
         return admins;
     }
 
-    public void update (Service service)
+    public void update (Service service) throws TransactionException
     {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.merge(service.getLocation());
-        if (service.getServiceNature().isOther())
-        {
-            em.merge(service.getServiceNature());
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(service.getLocation());
+            if (service.getServiceNature().isOther())
+            {
+                em.merge(service.getServiceNature());
+            }
+            em.merge(service);
+            em.getTransaction().commit();
         }
-        em.merge(service);
-        em.getTransaction().commit();
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
-    public void validate(Service service)
+    public void validate(Service service) throws TransactionException
     {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        service.setStatus(1);
-        em.merge(service);
-        String message = "Votre ";
-        if (service.isOffer())
-        {
-            message+= "offre de service ";
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            service.setStatus(1);
+            em.merge(service);
+            String message = "Votre ";
+            if (service.isOffer())
+            {
+                message+= "offre de service ";
+            }
+            else
+            {
+                message+= "demande de service ";
+            }
+            message+="validée";
+            Notification notification = new ServiceValidationNotification(service.getUser(), LocalDateTime.now(),
+                    message,service);
+            em.persist(notification);
+            em.getTransaction().commit();
         }
-        else
+        catch (Exception e)
         {
-            message+= "demande de service ";
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
         }
-        message+="validée";
-        Notification notification = new ServiceValidationNotification(service.getUser(), LocalDateTime.now(),
-                message,service);
-        em.persist(notification);
-        em.getTransaction().commit();
     }
 
-    public void adminDelete(long id)
+    public void adminDelete(long id) throws TransactionException
     {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        String message = "Votre ";
-        Service service = em.find(Service.class,id);
-        if (service.isOffer())
-        {
-            message += "offre de service";
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            String message = "Votre ";
+            Service service = em.find(Service.class,id);
+            if (service.isOffer())
+            {
+                message += "offre de service";
+            }
+            else
+            {
+                message += "demande de service";
+            }
+            message+="ayant pour référence "+service.getReference()+" a été supprimée par l'administrateur";
+            Notification notification = new Notification(service.getUser(),LocalDateTime.now(),message);
+            em.persist(notification);
+            em.remove(service);
+            em.getTransaction().commit();
         }
-        else
+        catch (Exception e)
         {
-            message += "demande de service";
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
         }
-        message+="ayant pour référence "+service.getReference()+" a été supprimée par l'administrateur";
-        Notification notification = new Notification(service.getUser(),LocalDateTime.now(),message);
-        em.persist(notification);
-        em.remove(service);
-        em.getTransaction().commit();
     }
 
     @Override
-    public void deleteById(long id)
+    public void deleteById(long id) throws TransactionException
     {
         //TODO check cascade
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        Service service = em.find(Service.class,id);
-        em.remove(service);
-        em.getTransaction().commit();
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            Service service = em.find(Service.class,id);
+            em.remove(service);
+            em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
 }

@@ -2,6 +2,7 @@ package web;
 
 import data.Address;
 import data.User;
+import ejb.TransactionException;
 import ejb.UserBean;
 
 import javax.ejb.EJB;
@@ -53,7 +54,11 @@ public class SignUpController extends UnauthenticatedServlet {
             rd.forward(req,resp);
             return;
         }
-        userBean.save(user);
+        try {
+            userBean.save(user);
+        } catch (TransactionException e) {
+            resp.sendError(500);
+        }
         RequestDispatcher rd = req.getRequestDispatcher("Template/signin.jsp");
         rd.forward(req,resp);
     }

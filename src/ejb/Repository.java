@@ -17,7 +17,7 @@ public abstract class Repository<T>  {
 
     public abstract T findById(long id);
 
-    public abstract void save(T t);
+    public abstract void save(T t) throws TransactionException;
 
-    public abstract void deleteById(long id);
+    public abstract void deleteById(long id) throws TransactionException;
 }

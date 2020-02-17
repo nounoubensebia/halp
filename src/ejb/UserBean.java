@@ -54,25 +54,41 @@ public class UserBean extends Repository<User> {
     }
 
     @Override
-    public void save(User user) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.persist(user.getAddress());
-        em.persist(user);
-        em.getTransaction().commit();
+    public void save(User user) throws TransactionException {
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            em.persist(user.getAddress());
+            em.persist(user);
+            em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
-    public void update(User user)
+    public void update(User user) throws TransactionException
     {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        em.merge(user);
-        em.merge(user.getAddress());
-        em.getTransaction().commit();
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            em.merge(user);
+            em.merge(user.getAddress());
+            em.getTransaction().commit();
+        } catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
     @Override
-    public void deleteById(long id) {
+    public void deleteById(long id) throws TransactionException {
+        try {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         User user = em.find(User.class,id);
@@ -85,6 +101,13 @@ public class UserBean extends Repository<User> {
         }
         em.remove(user);
         em.getTransaction().commit();
+        } catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
+
     }
 
     private List<User> getRelatedUsers(EntityManager em,User user)

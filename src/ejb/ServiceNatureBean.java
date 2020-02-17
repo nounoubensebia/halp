@@ -33,19 +33,35 @@ public class ServiceNatureBean extends Repository<ServiceNature> {
     }
 
     @Override
-    public void save(ServiceNature serviceNature) {
+    public void save(ServiceNature serviceNature) throws TransactionException {
+        try {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         em.persist(serviceNature);
         em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
     @Override
-    public void deleteById(long id) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        ServiceNature service = em.find(ServiceNature.class,id);
-        em.remove(service);
-        em.getTransaction().commit();
+    public void deleteById(long id) throws TransactionException {
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            ServiceNature service = em.find(ServiceNature.class,id);
+            em.remove(service);
+            em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 }

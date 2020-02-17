@@ -1,10 +1,7 @@
 package web;
 
 import data.*;
-import ejb.ServiceBean;
-import ejb.ServiceNatureBean;
-import ejb.ServiceTypeBean;
-import ejb.UserBean;
+import ejb.*;
 import utils.DateUtils;
 
 import javax.ejb.EJB;
@@ -70,6 +67,10 @@ public class CreateServiceController extends HttpServlet {
 
         Service service = new Service(user,startDate,endDate,creationDate,shortDescription,longDescription,
                 isOffer,status,location,serviceType,serviceNature);
-        serviceBean.save(service);
+        try {
+            serviceBean.save(service);
+        } catch (TransactionException e) {
+            resp.sendError(500);
+        }
     }
 }

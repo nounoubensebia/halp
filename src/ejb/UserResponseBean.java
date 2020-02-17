@@ -38,60 +38,71 @@ public class UserResponseBean extends Repository<UserResponse> {
     }
 
     @Override
-    public void save(UserResponse userResponse) {
-        EntityManager entityManager = getEntityManager();
-        entityManager.getTransaction().begin();
+    public void save(UserResponse userResponse) throws TransactionException {
 
-        userResponse.getService().setStatus(2);
-        entityManager.merge(userResponse.getService());
+        try {
+
+            EntityManager entityManager = getEntityManager();
+            entityManager.getTransaction().begin();
+
+            userResponse.getService().setStatus(2);
+            entityManager.merge(userResponse.getService());
 
 
+            // saving user response
+            entityManager.persist(userResponse);
 
-        // saving user response
-        entityManager.persist(userResponse);
+            //saving user response notification
+            String message = "L'utilisatuer " + userResponse.getUser().getUserName() + " a répondu à votre ";
+            if (userResponse.getService().isOffer()) {
+                message += "offre de service";
+            } else {
+                message += "demande de service";
+            }
+            UserResponseNotification userResponseNotification = new UserResponseNotification(userResponse.getService().getUser(),
+                    LocalDateTime.now(), message, userResponse);
+            entityManager.persist(userResponseNotification);
 
-        //saving user response notification
-        String message = "L'utilisatuer "+userResponse.getUser().getUserName()+" a répondu à votre " ;
-        if (userResponse.getService().isOffer())
-        {
-            message += "offre de service";
+            //saving user details notification
+            message = "Vous avez répondu à ";
+            if (userResponse.getService().isOffer()) {
+                message += "l'offre de service";
+            } else {
+                message += "la demande de service";
+            }
+            message += " de l'utilisateur " + userResponse.getUser().getUserName();
+
+            UserDetailsNotification userDetailsNotification = new UserDetailsNotification(userResponse.getUser(),
+                    LocalDateTime.now(), message, userResponse.getService().getUser());
+            entityManager.persist(userDetailsNotification);
+
+
+            entityManager.getTransaction().commit();
         }
-        else
+        catch (Exception e)
         {
-            message += "demande de service";
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
         }
-        UserResponseNotification userResponseNotification = new UserResponseNotification(userResponse.getService().getUser(),
-                LocalDateTime.now(),message,userResponse);
-        entityManager.persist(userResponseNotification);
-
-        //saving user details notification
-        message = "Vous avez répondu à ";
-        if (userResponse.getService().isOffer())
-        {
-            message += "l'offre de service";
-        }
-        else
-        {
-            message += "la demande de service";
-        }
-        message+= " de l'utilisateur "+userResponse.getUser().getUserName();
-
-        UserDetailsNotification userDetailsNotification = new UserDetailsNotification(userResponse.getUser(),
-                LocalDateTime.now(),message,userResponse.getService().getUser());
-        entityManager.persist(userDetailsNotification);
-
-
-
-        entityManager.getTransaction().commit();
 
     }
 
     @Override
-    public void deleteById(long id) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        UserResponse userResponse = em.find(UserResponse.class,id);
-        em.remove(userResponse);
-        em.getTransaction().commit();
+    public void deleteById(long id) throws TransactionException {
+        try {
+
+
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            UserResponse userResponse = em.find(UserResponse.class, id);
+            em.remove(userResponse);
+            em.getTransaction().commit();
+        } catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 }

@@ -33,19 +33,35 @@ public class ServiceTypeBean extends Repository<ServiceType> {
     }
 
     @Override
-    public void save(ServiceType serviceType) {
+    public void save(ServiceType serviceType) throws TransactionException {
+        try {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
         em.persist(serviceType);
         em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 
     @Override
-    public void deleteById(long id) {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
-        ServiceType service = em.find(ServiceType.class,id);
-        em.remove(service);
-        em.getTransaction().commit();
+    public void deleteById(long id) throws TransactionException {
+        try {
+            EntityManager em = getEntityManager();
+            em.getTransaction().begin();
+            ServiceType service = em.find(ServiceType.class,id);
+            em.remove(service);
+            em.getTransaction().commit();
+        }
+        catch (Exception e)
+        {
+            TransactionException transactionException = new TransactionException("Transaction exception");
+            transactionException.setStackTrace(e.getStackTrace());
+            throw transactionException;
+        }
     }
 }
