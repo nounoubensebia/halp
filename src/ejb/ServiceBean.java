@@ -15,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.servlet.ServletRequest;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -54,7 +55,44 @@ public class ServiceBean extends Repository<Service> {
             em.persist(service.getServiceNature());
         }
         em.persist(service);
+        String message = "L'utilisateur "+service.getUser().getUserName()+" a créé une nouvelle";
+        if (service.isOffer())
+        {
+            message+= " offre de service";
+        }
+        else
+        {
+            message+= " demande de service";
+        }
+        message+=" ayant pour référence "+service.getReference();
+        for (User admin:getAdmins(em))
+        {
+
+            ServiceValidationNotification serviceValidationNotification = new ServiceValidationNotification(
+                    admin,LocalDateTime.now(),message,service);
+            em.persist(serviceValidationNotification);
+        }
+
         em.getTransaction().commit();
+    }
+
+    public List<User> getAdmins(EntityManager em)
+    {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> cq = cb.createQuery(User.class);
+        Root<User> rootEntry = cq.from(User.class);
+        CriteriaQuery<User> all = cq.select(rootEntry);
+        TypedQuery<User> allQuery = em.createQuery(all);
+
+        ArrayList<User> admins = new ArrayList<>();
+        for (User user:allQuery.getResultList())
+        {
+            if (user.isAdmin())
+            {
+                admins.add(user);
+            }
+        }
+        return admins;
     }
 
     public void update (Service service)
