@@ -138,8 +138,8 @@ position:absolute;
                         for (Service service:services) {
                             out.print("<tr>\n" +
                                     "                            <td>"+service.getReference()+"</td>\n" +
-                                    "                            <td>"+service.getServiceType()+"</td>\n" +
-                                    "                            <td>"+service.getServiceNature()+"</td>\n" +
+                                    "                            <td>"+service.getServiceType().getName()+"</td>\n" +
+                                    "                            <td>"+service.getServiceNature().getNature()+"</td>\n" +
                                     "                            <td>"+service.getShortDescription()+"</td>\n" +
                                     "                            <td>\n" +
                                     "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
