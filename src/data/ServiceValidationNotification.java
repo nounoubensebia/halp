@@ -1,5 +1,8 @@
 package data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
@@ -9,6 +12,7 @@ import java.time.LocalDateTime;
 public class ServiceValidationNotification extends Notification {
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Service service;
 
     public ServiceValidationNotification() {
@@ -20,6 +24,7 @@ public class ServiceValidationNotification extends Notification {
     }
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Service getService() {
         return service;
     }

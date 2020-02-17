@@ -1,5 +1,8 @@
 package data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -12,11 +15,14 @@ public class Notification {
     private long id;
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     private LocalDateTime localDateTime;
 
     private String message;
+
+    private int status;
 
     public Notification() {
     }
@@ -25,6 +31,7 @@ public class Notification {
         this.user = user;
         this.localDateTime = localDateTime;
         this.message = message;
+        this.status = 0;
     }
 
     public void setId(long id) {
@@ -38,6 +45,7 @@ public class Notification {
     }
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public User getUser() {
         return user;
     }
@@ -60,5 +68,13 @@ public class Notification {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

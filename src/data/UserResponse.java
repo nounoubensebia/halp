@@ -1,5 +1,8 @@
 package data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -11,9 +14,11 @@ public class UserResponse {
     private long id;
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Service service;
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     private LocalDateTime date;
@@ -41,6 +46,7 @@ public class UserResponse {
     }
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public Service getService() {
         return service;
     }
@@ -50,6 +56,7 @@ public class UserResponse {
     }
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public User getUser() {
         return user;
     }

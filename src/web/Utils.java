@@ -13,4 +13,9 @@ public class Utils {
         return userBean.findById(Long.parseLong(req.getParameter("user_id")));
     }
 
+    public static void deleteUser(HttpServletRequest req, UserBean userBean)
+    {
+
+    }
+
 }

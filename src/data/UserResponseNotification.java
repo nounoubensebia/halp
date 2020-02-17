@@ -1,5 +1,8 @@
 package data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import java.time.LocalDateTime;
@@ -8,9 +11,11 @@ import java.time.LocalDateTime;
 public class UserResponseNotification extends Notification {
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private UserResponse userResponse;
 
     @OneToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public UserResponse getUserResponse() {
         return userResponse;
     }

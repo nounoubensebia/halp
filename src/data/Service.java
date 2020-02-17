@@ -1,8 +1,14 @@
 package data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import utils.StringUtils;
+
 import javax.persistence.*;
+import java.nio.charset.Charset;
 import java.sql.Date;
 import java.time.LocalDateTime;
+import java.util.Random;
 
 @Entity
 public class Service {
@@ -11,7 +17,11 @@ public class Service {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
+
+    private String reference;
     private LocalDateTime startDate;
     private LocalDateTime endDate;
     private LocalDateTime creationDate;
@@ -19,10 +29,10 @@ public class Service {
     private String longDescription;
     private boolean isOffer;
     private int status;
-    @OneToOne
+
+    @OneToOne(cascade = CascadeType.REMOVE)
     private Location location;
 
-    @OneToOne
     private ServiceType serviceType;
 
     @OneToOne
@@ -39,6 +49,7 @@ public class Service {
     }
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     public User getUser() {
         return user;
     }
@@ -95,7 +106,7 @@ public class Service {
         this.status = status;
     }
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     public Location getLocation() {
         return location;
     }
@@ -130,6 +141,14 @@ public class Service {
         isOffer = offer;
     }
 
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
+
     public Service(User user, LocalDateTime startDate, LocalDateTime endDate, LocalDateTime creationDate, String shortDescription, String longDescription, boolean isOffer, int status, Location location, ServiceType serviceType, ServiceNature serviceNature) {
         this.user = user;
         this.startDate = startDate;
@@ -142,6 +161,7 @@ public class Service {
         this.location = location;
         this.serviceType = serviceType;
         this.serviceNature = serviceNature;
+        this.reference = StringUtils.randomString(6);
     }
 
     public Service() {

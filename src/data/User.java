@@ -1,5 +1,8 @@
 package data;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class User {
     private String description;
     private boolean isAdmin;
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE} )
     private Address address;
 
     public User() {
@@ -104,7 +107,7 @@ public class User {
         isAdmin = admin;
     }
 
-    @OneToOne
+    @OneToOne(cascade = {CascadeType.REMOVE})
     public Address getAddress() {
         return address;
     }

@@ -92,6 +92,27 @@ public class ServiceBean extends Repository<Service> {
         em.getTransaction().commit();
     }
 
+    public void adminDelete(long id)
+    {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        String message = "Votre ";
+        Service service = em.find(Service.class,id);
+        if (service.isOffer())
+        {
+            message += "offre de service";
+        }
+        else
+        {
+            message += "demande de service";
+        }
+        message+="ayant pour référence "+service.getReference()+" a été supprimée par l'administrateur";
+        Notification notification = new Notification(service.getUser(),LocalDateTime.now(),message);
+        em.persist(notification);
+        em.remove(service);
+        em.getTransaction().commit();
+    }
+
     @Override
     public void deleteById(long id)
     {

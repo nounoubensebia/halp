@@ -24,4 +24,11 @@ public class ValidateServiceController extends HttpServlet {
         Service service = serviceBean.findById(id);
         serviceBean.validate(service);
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        long id = Long.parseLong(req.getParameter("service_id"));
+        //Service service = serviceBean.findById(id);
+        serviceBean.adminDelete(id);
+    }
 }

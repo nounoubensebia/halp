@@ -9,8 +9,12 @@
         <class>data.ServiceType</class>
         <class>data.Location</class>
         <class>data.Notification</class>
+        <class>data.UserResponse</class>
+        <class>data.UserDetailsNotification</class>
+        <class>data.UserResponseNotification</class>
+        <class>data.ServiceValidationNotification</class>
         <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/serveur_java_db" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://127.0.0.1:3306/" />
             <property name="javax.persistence.jdbc.user" value="root" />
             <property name="javax.persistence.jdbc.password" value="" />
             <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
