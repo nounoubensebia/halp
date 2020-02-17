@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class Notification {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     @OneToOne
@@ -17,12 +18,21 @@ public class Notification {
 
     private String message;
 
+    public Notification() {
+    }
 
+    public Notification(User user, LocalDateTime localDateTime, String message) {
+        this.user = user;
+        this.localDateTime = localDateTime;
+        this.message = message;
+    }
 
     public void setId(long id) {
         this.id = id;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     public long getId() {
         return id;
     }

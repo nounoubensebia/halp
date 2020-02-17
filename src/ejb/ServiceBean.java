@@ -1,6 +1,8 @@
 package ejb;
 
+import data.Notification;
 import data.Service;
+import data.ServiceValidationNotification;
 import data.User;
 
 import javax.ejb.EJB;
@@ -11,6 +13,8 @@ import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import javax.servlet.ServletRequest;
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -50,6 +54,41 @@ public class ServiceBean extends Repository<Service> {
             em.persist(service.getServiceNature());
         }
         em.persist(service);
+        em.getTransaction().commit();
+    }
+
+    public void update (Service service)
+    {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        em.merge(service.getLocation());
+        if (service.getServiceNature().isOther())
+        {
+            em.merge(service.getServiceNature());
+        }
+        em.merge(service);
+        em.getTransaction().commit();
+    }
+
+    public void validate(Service service)
+    {
+        EntityManager em = getEntityManager();
+        em.getTransaction().begin();
+        service.setStatus(1);
+        em.merge(service);
+        String message = "Votre ";
+        if (service.isOffer())
+        {
+            message+= "offre de service ";
+        }
+        else
+        {
+            message+= "demande de service ";
+        }
+        message+="validée";
+        Notification notification = new ServiceValidationNotification(service.getUser(), LocalDateTime.now(),
+                message,service);
+        em.persist(notification);
         em.getTransaction().commit();
     }
 
