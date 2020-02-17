@@ -23,7 +23,7 @@ public class SignUpController extends UnauthenticatedServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         super.doGet(req,resp);
-        RequestDispatcher rd = req.getRequestDispatcher("Template/signup.html");
+        RequestDispatcher rd = req.getRequestDispatcher("Template/signup.jsp");
         rd.forward(req,resp);
     }
 
@@ -48,13 +48,13 @@ public class SignUpController extends UnauthenticatedServlet {
         if (userBean.findByEmail(email)!=null)
         {
             //error
-            RequestDispatcher rd = req.getRequestDispatcher("Template/signup.html");
-            req.setAttribute("error","email already exists");
+            RequestDispatcher rd = req.getRequestDispatcher("Template/signup.jsp");
+            req.setAttribute("error-email","email already exists");
             rd.forward(req,resp);
             return;
         }
         userBean.save(user);
-        RequestDispatcher rd = req.getRequestDispatcher("Template/signin.html");
+        RequestDispatcher rd = req.getRequestDispatcher("Template/signin.jsp");
         rd.forward(req,resp);
     }
 }
