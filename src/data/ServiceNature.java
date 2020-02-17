@@ -12,7 +12,16 @@ public class ServiceNature {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private String nature;
-    private String natureIfOther;
+    private boolean other;
+
+
+    public ServiceNature(String nature, boolean other) {
+        this.nature = nature;
+        this.other = other;
+    }
+
+    public ServiceNature() {
+    }
 
     public void setId(long id) {
         this.id = id;
@@ -32,11 +41,11 @@ public class ServiceNature {
         this.nature = nature;
     }
 
-    public String getNatureIfOther() {
-        return natureIfOther;
+    public boolean isOther() {
+        return other;
     }
 
-    public void setNatureIfOther(String natureIfOther) {
-        this.natureIfOther = natureIfOther;
+    public void setOther(boolean other) {
+        this.other = other;
     }
 }

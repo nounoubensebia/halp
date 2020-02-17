@@ -15,29 +15,28 @@ public class User {
     private String userName;
     private String phone;
     private String password;
+    private String description;
     private boolean isAdmin;
 
+    @OneToOne
+    private Address address;
 
     public User() {
     }
 
-    public User(String email, String firstName, String lastName, String userName, String phone,
-                String password, boolean isAdmin, Address address) {
+    public User(String email, String firstName, String lastName, String userName, String phone, String password, String description, boolean isAdmin, Address address) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.userName = userName;
         this.phone = phone;
         this.password = password;
+        this.description = description;
         this.isAdmin = isAdmin;
         this.address = address;
     }
 
-    @OneToMany
-    private List<Service> services;
 
-    @OneToOne
-    private Address address;
 
     public void setId(long id) {
         this.id = id;
@@ -115,12 +114,12 @@ public class User {
         this.address = address;
     }
 
-    @OneToMany
-    public List<Service> getServices() {
-        return services;
+
+    public String getDescription() {
+        return description;
     }
 
-    public void setServices(List<Service> services) {
-        this.services = services;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

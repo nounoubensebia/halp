@@ -1,67 +1,51 @@
 package ejb;
 
-import data.Service;
-import data.User;
+import data.ServiceNature;
 
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
-import javax.persistence.*;
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-
 @Stateless
 @TransactionManagement(TransactionManagementType.BEAN)
-public class ServiceBean extends Repository<Service> {
-
-
-
+public class ServiceNatureBean extends Repository<ServiceNature> {
     @Override
-    public List<Service> getAll()
-    {
+    public List<ServiceNature> getAll() {
         EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Service> cq = cb.createQuery(Service.class);
-        Root<Service> rootEntry = cq.from(Service.class);
-        CriteriaQuery<Service> all = cq.select(rootEntry);
-        TypedQuery<Service> allQuery = em.createQuery(all);
+        CriteriaQuery<ServiceNature> cq = cb.createQuery(ServiceNature.class);
+        Root<ServiceNature> rootEntry = cq.from(ServiceNature.class);
+        CriteriaQuery<ServiceNature> all = cq.select(rootEntry);
+        TypedQuery<ServiceNature> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
 
     @Override
-    public Service findById(long id)
-    {
+    public ServiceNature findById(long id) {
         EntityManager entityManager = getEntityManager();
-        return entityManager.find(Service.class,id);
+        return entityManager.find(ServiceNature.class,id);
     }
 
     @Override
-    public void save(Service service)
-    {
+    public void save(ServiceNature serviceNature) {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
-        em.persist(service.getLocation());
-        if (service.getServiceNature().isOther())
-        {
-            em.persist(service.getServiceNature());
-        }
-        em.persist(service);
+        em.persist(serviceNature);
         em.getTransaction().commit();
     }
 
     @Override
-    public void deleteById(long id)
-    {
-        //TODO check cascade
+    public void deleteById(long id) {
         EntityManager em = getEntityManager();
         em.getTransaction().begin();
-        Service service = em.find(Service.class,id);
+        ServiceNature service = em.find(ServiceNature.class,id);
         em.remove(service);
         em.getTransaction().commit();
     }
-
 }

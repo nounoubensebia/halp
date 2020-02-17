@@ -3,6 +3,8 @@ package ejb;
 import data.Notification;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
+import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,6 +13,7 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Stateless
+@TransactionManagement(TransactionManagementType.BEAN)
 public class NotificationBean extends Repository<Notification> {
 
     @Override
