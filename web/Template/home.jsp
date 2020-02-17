@@ -110,75 +110,46 @@ position:absolute;
       </style>
     
       <!--Section: Content-->
-      <section class="dark-grey-text text-center">
+      <section class="dark-grey-text">
         
         <!-- Heading -->
           <div class="card mb-4 wow fadeIn">
 
             <!--Card content-->
             <div class="card-body">
-                <p>
-                    <%
-                        List<Service> services = (List<Service>)request.getAttribute("services");
-                        for (Service service:services)
-                        {
-                            out.print(service.getLongDescription());
-                            out.print("<br>");
-                        }
-                    %>
-                </p>
-                <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+
+                <table id="dtBasicExample" class="table table-hover table-bordered" cellspacing="0" width="100%">
                     <thead>
                     <tr>
-                        <th class="th-sm">Name
+                        <th class="th-sm">Référence du service
                         </th>
-                        <th class="th-sm">Position
+                        <th class="th-sm">Type
                         </th>
-                        <th class="th-sm">Office
+                        <th class="th-sm">Nature
                         </th>
-                        <th class="th-sm">Age
+                        <th class="th-sm">Description
                         </th>
-                        <th class="th-sm">Start date
-                        </th>
-                        <th class="th-sm">Salary
+                        <th class="th-sm">Voir service
                         </th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>Tiger Nixon</td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>61</td>
-                        <td>2011/04/25</td>
-                        <td>$320,800</td>
-                    </tr>
-                    <tr>
-                        <td>Garrett Winters</td>
-                        <td>Accountant</td>
-                        <td>Tokyo</td>
-                        <td>63</td>
-                        <td>2011/07/25</td>
-                        <td>$170,750</td>
-                    </tr>
+                    <% List<Service> services = (List<Service>)request.getAttribute("services");
+                        for (Service service:services) {
+                            out.print("<tr>\n" +
+                                    "                            <td>"+service.getReference()+"</td>\n" +
+                                    "                            <td>"+service.getServiceType()+"</td>\n" +
+                                    "                            <td>"+service.getServiceNature()+"</td>\n" +
+                                    "                            <td>"+service.getShortDescription()+"</td>\n" +
+                                    "                            <td>\n" +
+                                    "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
+                                    "                            </td>\n" +
+                                    "                            </tr>");
+                        }
+                    %>
+
 
                     </tbody>
-                    <tfoot>
-                    <tr>
-                        <th>Name
-                        </th>
-                        <th>Position
-                        </th>
-                        <th>Office
-                        </th>
-                        <th>Age
-                        </th>
-                        <th>Start date
-                        </th>
-                        <th>Salary
-                        </th>
-                    </tr>
-                    </tfoot>
                 </table>
             </div>
 
