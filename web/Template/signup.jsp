@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Création du compte</title>
-    <jsp:include page="./Imports.jsp" />
+    <jsp:include page="importsCss.jsp" />
   <style>
 
     .map-container{
@@ -113,7 +113,7 @@ position:absolute;
   </main>
   <!--Main layout-->
 
-  <jsp:include page="./ImportsJS.jsp" />
+  <jsp:include page="importsJS.jsp" />
 </body>
 
 </html>

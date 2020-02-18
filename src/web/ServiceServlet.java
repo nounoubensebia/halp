@@ -25,7 +25,7 @@ public class ServiceServlet extends HttpServlet {
         Enumeration<String> params = req.getParameterNames();
         long ida = Long.parseLong(id);
         Service service = serviceBean.findById(ida);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/Template/Service.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/Template/service.jsp");
         req.setAttribute("Service",service);
         requestDispatcher.forward(req,resp);
     }

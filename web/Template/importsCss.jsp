@@ -14,6 +14,7 @@
 <!-- Your custom styles (optional) -->
 <link href="${pageContext.request.contextPath}/Template/css/style.min.css" rel="stylesheet">
 
+<link href="${pageContext.request.contextPath}/Template/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet">
 <!-- DataTables CSS -->
 <link href="${pageContext.request.contextPath}/Template/css/addons/datatables.min.css" rel="stylesheet">
 

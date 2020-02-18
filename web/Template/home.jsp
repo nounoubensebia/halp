@@ -9,7 +9,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Home</title>
-    <jsp:include page="./Imports.jsp" />
+    <jsp:include page="importsCss.jsp" />
   <style>
 
     .map-container{
@@ -67,6 +67,7 @@ position:absolute;
               </li>
             </ul>
 
+
           <!-- Right -->
          
           <ul class="navbar-nav ml-auto nav-flex-icons">
@@ -111,7 +112,97 @@ position:absolute;
     
       <!--Section: Content-->
       <section class="dark-grey-text">
-        
+          <div class="modal fade" id="modalRegisterForm" role="dialog" aria-labelledby="myModalLabel"
+               aria-hidden="true">
+              <div class="modal-dialog">
+                  <div class="modal-content">
+                      <div class="modal-header text-center">
+                          <h4 class="modal-title w-100 font-weight-bold">Nouveau Service</h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                      <div class="modal-body mx-3">
+                          <!-- Offre ou Demande -->
+                          <label class="mdb-main-label">Demande ou Offre ?</label>
+                          <select class="browser-default custom-select mb-4">
+                              <option value="1" selected>Offre de service</option>
+                              <option value="0">Demande de service</option>
+                          </select>
+
+
+                          <!-- Type -->
+                          <label class="mdb-main-label">Type de service</label>
+                          <select class="browser-default custom-select mb-4">
+                              <option value="0" selected>Service à offrir</option>
+                              <option value="1">Objet à preter</option>
+                              <option value="2">Objet à donner</option>
+                              <option value="3">Autres</option>
+                          </select>
+
+
+                          <!-- Nature -->
+                          <label class="mdb-main-label">Nature de service</label>
+                          <select class="browser-default custom-select mb-4">
+                              <option value="0" selected>Nature 1</option>
+                              <option value="1">Nature 2</option>
+                              <option value="2">Nature 3</option>
+                              <option value="3">Autres</option>
+                          </select>
+
+
+                          <div class="form-row mb-4">
+
+                              <div class="col">
+                                  <label class="mdb-main-label">Date début</label>
+                                  <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                                      <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+                                      <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                      </div>
+                                  </div>
+                              </div>
+
+                            <div class="col">
+                                <label class="mdb-main-label">Date fin</label>
+                                <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+                                    <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                          </div>
+
+
+
+
+                          <!-- Localisation -->
+                          <label class="mdb-main-label">Adresse</label>
+                          <input type="text" name="street" id="street" class="form-control mb-2" placeholder="Street" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                          <input type="text" name="city" id="city" class="form-control mb-2" placeholder="City" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                          <input type="text" name="supplement" id="supplement" class="form-control mb-4" placeholder="Supplement" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+
+                          <!-- Description -->
+                          <label class="mdb-main-label">Description courte</label>
+                          <textarea name="description" id="descriptionCourte" class="form-control mb-4" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="2" required></textarea>
+
+                          <label class="mdb-main-label">Description Détaillée</label>
+                          <textarea name="description" id="descriptionLongue" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required></textarea>
+
+
+                      </div>
+                      <div class="modal-footer d-flex justify-content-center">
+                          <button class="btn btn-deep-orange">Enregistrer</button>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+          <div class="text-center">
+              <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Nouveau Service</a>
+          </div>
         <!-- Heading -->
           <div class="card mb-4 wow fadeIn">
 
@@ -147,8 +238,6 @@ position:absolute;
                                     "                            </tr>");
                         }
                     %>
-
-
                     </tbody>
                 </table>
             </div>
@@ -172,7 +261,8 @@ position:absolute;
 
   </footer>
   <!--/.Footer-->
-  <jsp:include page="./ImportsJS.jsp" />
+  <jsp:include page="importsJS.jsp" />
+
 
 
 
