@@ -32,8 +32,8 @@ public class CreateServiceController extends HttpServlet {
 
     private User getUser(HttpServletRequest req)
     {
-        //return (User)req.getSession().getAttribute("user");
-        return userBean.findById(Long.parseLong(req.getParameter("user_id")));
+        return (User)req.getSession().getAttribute("user");
+        //return userBean.findById(Long.parseLong(req.getParameter("user_id")));
     }
 
     @Override
@@ -69,6 +69,7 @@ public class CreateServiceController extends HttpServlet {
                 isOffer,status,location,serviceType,serviceNature);
         try {
             serviceBean.save(service);
+            resp.sendRedirect("Servlet");
         } catch (TransactionException e) {
             resp.sendError(500);
         }

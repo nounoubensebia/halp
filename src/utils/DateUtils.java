@@ -6,6 +6,7 @@ public class DateUtils {
 
     public static DateTimeFormatter getStandardFormatter()
     {
-        return DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        return DateTimeFormatter.ofPattern("MM/dd/yyyy");
     }
+
 }

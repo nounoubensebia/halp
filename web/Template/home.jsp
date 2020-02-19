@@ -1,5 +1,8 @@
 <%@ page import="data.Service" %>
 <%@ page import="java.util.List" %>
+<%@ page import="data.ServiceType" %>
+<%@ page import="data.ServiceNature" %>
+<%@ page import="data.User" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -123,9 +126,13 @@ position:absolute;
                           </button>
                       </div>
                       <div class="modal-body mx-3">
+                          <form method="POST" action="create-service">
+                              <input name="user_id" id="user_id" value="<%if(session.getAttribute("user")!=null){
+                                  User user = (User)session.getAttribute("user");
+                              out.print(user.getId());}%>" hidden>
                           <!-- Offre ou Demande -->
                           <label class="mdb-main-label">Demande ou Offre ?</label>
-                          <select class="browser-default custom-select mb-4">
+                          <select class="browser-default custom-select mb-4" name="isOffer" id="isOffer">
                               <option value="1" selected>Offre de service</option>
                               <option value="0">Demande de service</option>
                           </select>
@@ -133,30 +140,36 @@ position:absolute;
 
                           <!-- Type -->
                           <label class="mdb-main-label">Type de service</label>
-                          <select class="browser-default custom-select mb-4">
-                              <option value="0" selected>Service à offrir</option>
-                              <option value="1">Objet à preter</option>
-                              <option value="2">Objet à donner</option>
-                              <option value="3">Autres</option>
+                          <select class="browser-default custom-select mb-4" name="service_type_id" id="service_type_id">
+                                  <% List<ServiceType> serviceTypes = (List<ServiceType>)request.getAttribute("types");
+                                    for (ServiceType serviceType:serviceTypes) {
+                                        out.print("<option value="+serviceType.getId()+">"+serviceType.getName()+"</option>");
+                                    }%>
                           </select>
 
 
                           <!-- Nature -->
                           <label class="mdb-main-label">Nature de service</label>
-                          <select class="browser-default custom-select mb-4">
-                              <option value="0" selected>Nature 1</option>
-                              <option value="1">Nature 2</option>
-                              <option value="2">Nature 3</option>
-                              <option value="3">Autres</option>
+                              <input type="text" name="service_nature_is_other" id="service_nature_is_other" value="" hidden>
+                          <select class="browser-default custom-select mb-4" name="service_nature_id" id="service_nature_id">
+                          <% List<ServiceNature> serviceNatures = (List<ServiceNature>)request.getAttribute("natures");
+                              for (ServiceNature serviceNature:serviceNatures) {
+                                  out.print("<option value="+serviceNature.getId()+">"+serviceNature.getNature()+"</option>");
+                              }%>
+                          <option value="autre">Autre</option>
                           </select>
+                              <div id="autre">
+                              <label class="mdb-main-label">Autre</label>
+                              <input type="text" name="service_nature" id="service_nature" class="form-control mb-2" placeholder="Autre" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+                              </div>
 
 
-                          <div class="form-row mb-4">
+                              <div class="form-row mb-4">
 
-                              <div class="col">
+                            <div class="col">
                                   <label class="mdb-main-label">Date début</label>
                                   <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-                                      <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+                                      <input type="text" name="start_date" id="start_date" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
                                       <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
                                           <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                       </div>
@@ -166,7 +179,7 @@ position:absolute;
                             <div class="col">
                                 <label class="mdb-main-label">Date fin</label>
                                 <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+                                    <input type="text" name="end_date" id="end_date" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
                                     <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
                                         <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                     </div>
@@ -175,27 +188,23 @@ position:absolute;
 
                           </div>
 
-
-
-
                           <!-- Localisation -->
                           <label class="mdb-main-label">Adresse</label>
-                          <input type="text" name="street" id="street" class="form-control mb-2" placeholder="Street" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
-                          <input type="text" name="city" id="city" class="form-control mb-2" placeholder="City" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
-                          <input type="text" name="supplement" id="supplement" class="form-control mb-4" placeholder="Supplement" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                          <input type="text" name="province" id="province" class="form-control mb-2" placeholder="Département" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                          <input type="text" name="city" id="city" class="form-control mb-2" placeholder="Ville" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                          <input type="text" name="commune" id="commune" class="form-control mb-4" placeholder="Commune" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
 
                           <!-- Description -->
                           <label class="mdb-main-label">Description courte</label>
-                          <textarea name="description" id="descriptionCourte" class="form-control mb-4" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="2" required></textarea>
+                          <textarea name="short_description" id="short_description" class="form-control mb-4" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="2" required></textarea>
 
                           <label class="mdb-main-label">Description Détaillée</label>
-                          <textarea name="description" id="descriptionLongue" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required></textarea>
-
-
+                          <textarea name="long_description" id="long_description" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required></textarea>
                       </div>
                       <div class="modal-footer d-flex justify-content-center">
                           <button class="btn btn-deep-orange">Enregistrer</button>
                       </div>
+                      </form>
                   </div>
               </div>
           </div>
@@ -205,7 +214,6 @@ position:absolute;
           </div>
         <!-- Heading -->
           <div class="card mb-4 wow fadeIn">
-
             <!--Card content-->
             <div class="card-body">
 
@@ -241,7 +249,6 @@ position:absolute;
                     </tbody>
                 </table>
             </div>
-
           </div>
       </section>
       <!--Section: Content-->
