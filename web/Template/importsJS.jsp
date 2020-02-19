@@ -49,11 +49,13 @@
 <script>
     $(function () {
         $('#datetimepicker7').datetimepicker({
+            format: 'L',
             locale: 'fr',
             minDate: moment(),
             useCurrent: false,
         });
         $('#datetimepicker8').datetimepicker({
+            format: 'L',
             useCurrent: false,
             locale: 'fr'
         });
@@ -65,4 +67,18 @@
         });
     });
 
+</script>
+<script>
+    $('#autre').hide();
+    $('#service_nature_is_other').attr('value', 'false')
+    $('#service_nature_id').change(function(){
+        if($('#service_nature_id').val() == 'autre') {
+            $('#autre').show();
+            $('#service_nature_is_other').attr('value', 'true')
+
+        }else{
+            $('#autre').hide();
+            $('#service_nature_is_other').attr('value', 'false')
+        }
+    });
 </script>
