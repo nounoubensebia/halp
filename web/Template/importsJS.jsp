@@ -77,9 +77,11 @@
     $('#service_nature_id').change(function(){
         if($('#service_nature_id').val() == 'autre') {
             $('#autre').show();
+            $("#service_nature").prop('required',true);
             $('#service_nature_is_other').attr('value', 'true')
         }else{
             $('#autre').hide();
+            $("#service_nature").prop('required',false);
             $('#service_nature_is_other').attr('value', 'false')
         }
     });

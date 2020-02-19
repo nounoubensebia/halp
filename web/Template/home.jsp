@@ -82,6 +82,8 @@ position:absolute;
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user"></i>
+                  <%User user = (User)session.getAttribute("user");
+                      out.print(user.getFirstName());%>
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-default"
                 aria-labelledby="navbarDropdownMenuLink-333">
@@ -91,8 +93,9 @@ position:absolute;
               </div>
             </li>
           </ul>
-            <%
-                }%>
+            <%}else{%>
+            <a href="signin" class="btn btn-outline-secondary ml-auto btn-md my-2 my-sm-0 ml-3" type="button" >Login</a>
+            <%}%>
 
         </div>
 
@@ -173,7 +176,7 @@ position:absolute;
                                   <div class="col">
                                       <label class="mdb-main-label">Date début</label>
                                       <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-                                          <input type="text" name="start_date" id="start_date" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+                                          <input type="text" name="start_date" id="start_date" class="form-control datetimepicker-input" data-target="#datetimepicker7" required/>
                                           <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
                                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                           </div>
@@ -183,7 +186,7 @@ position:absolute;
                                   <div class="col">
                                       <label class="mdb-main-label">Date fin</label>
                                       <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-                                          <input type="text" name="end_date" id="end_date" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+                                          <input type="text" name="end_date" id="end_date" class="form-control datetimepicker-input" data-target="#datetimepicker8" required/>
                                           <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
                                               <div class="input-group-text"><i class="fa fa-calendar"></i></div>
                                           </div>
@@ -221,9 +224,6 @@ position:absolute;
         <!-- Heading -->
           <div class="card mb-4 wow fadeIn">
             <!--Card content-->
-
-
-
 
                 <div class="tab-content card-body pt-5" id="myTabContentMD">
                     <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">

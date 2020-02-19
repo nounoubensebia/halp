@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Création du compte</title>
+  <title>Login</title>
   <jsp:include page="importsCss.jsp" />
   <style>
 
@@ -45,12 +45,12 @@ position:absolute;
                   <!-- Default form login -->
                   <form class="text-center border border-light p-5" method="POST" action="signin">
 
-                    <p class="h4 mb-4">Sign in</p>
+                    <p class="h4 mb-4">Login</p>
 
                     <%
                       if (request.getAttribute("error")!=null)
-                        out.print("<small class=\"form-text text-muted mb-4\">\n" +
-                                "                            Email ou Password incorrect" +
+                        out.print("<small class=\"form-text red-text mb-4\">\n" +
+                                "                            Email ou Mot de passe incorrect" +
                                 "                            </small>");
 
 
@@ -60,16 +60,16 @@ position:absolute;
                     <input type="email" name="email" id="email" class="form-control mb-4" placeholder="E-mail" required>
 
                     <!-- Password -->
-                    <input type="password" name="password" id="password" class="form-control mb-4" placeholder="Password" required>
+                    <input type="password" name="password" id="password" class="form-control mb-4" placeholder="Mot de passe" required>
 
                   
 
                     <!-- Sign in button -->
-                    <button class="btn btn-info btn-block my-4" type="submit">Sign in</button>
+                    <button class="btn btn-info btn-block my-4" type="submit">Login</button>
 
                     <!-- Register -->
-                    <p>Not a member?
-                        <a href="/signup.html">Register</a>
+                    <p>Vous n'avez pas un compte?
+                        <a href="signup">Creer un compte</a>
                     </p>
 
                   </form>

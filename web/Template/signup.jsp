@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Création du compte</title>
+  <title>Creation du compte</title>
     <jsp:include page="importsCss.jsp" />
   <style>
 
@@ -50,11 +50,11 @@ position:absolute;
                         <div class="form-row mb-4">
                             <div class="col">
                                 <!-- First name -->
-                                <input type="text" name="first_name" id="first_name" class="form-control" placeholder="First name" required>
+                                <input type="text" name="first_name" id="first_name" class="form-control" pattern="[A-Za-z]{1,32}" placeholder="Prénom" required>
                             </div>
                             <div class="col">
                                 <!-- Last name -->
-                                <input type="text" name="last_name" id="last_name" class="form-control" placeholder="Last name" required>
+                                <input type="text" name="last_name" id="last_name" class="form-control" pattern="[A-Za-z]{1,32}" placeholder="Nom" required>
                             </div>
                         </div>
 
@@ -62,7 +62,7 @@ position:absolute;
                         <input type="email" name="email" id="email" class="form-control mb-4" placeholder="E-mail" required>
                         <%
                             if (request.getAttribute("error-email")!=null)
-                                out.print("<small class=\"form-text text-muted mb-4\">\n" +
+                                out.print("<small class=\"form-text red-text mb-4\">\n" +
                                         "                            Cette adresse email existe déja" +
                                         "                            </small>");
 
@@ -70,13 +70,13 @@ position:absolute;
                         %>
 
                         <!-- Password -->
-                        <input type="password" name="password" id="password" class="form-control mb-4" placeholder="Password" aria-describedby="defaultRegisterFormPasswordHelpBlock" required>
+                        <input type="password" name="password" id="password" class="form-control mb-4" placeholder="Mot de passe" aria-describedby="defaultRegisterFormPasswordHelpBlock" required>
                        
                         <!-- User Name -->
                         <input type="text" name="user_name" id="user_name" class="form-control mb-4" placeholder="User name" aria-describedby="defaultRegisterFormUserNameHelpBlock" required>
                       
                         <!-- Phone number -->
-                        <input type="text" name="phone" id="phone" class="form-control mb-4" placeholder="Phone number" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                        <input type="number" name="phone" id="phone" class="form-control mb-4" placeholder="Téléphone" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
                       
 
                         <!-- Address -->
@@ -91,14 +91,14 @@ position:absolute;
  
 
                         <!-- Sign up button -->
-                        <button class="btn btn-info my-4 btn-block" type="submit">Sign in</button>
+                        <button class="btn btn-info my-4 btn-block" type="submit">Enregistrer</button>
 
                         <hr>
 
                         <!-- Terms of service -->
-                        <p>By clicking
-                            <em>Sign up</em> you agree to our
-                            <a href="" target="_blank">terms of service</a>
+                        <p>En cliquant
+                            <em>Enregistrer</em> vous acceptez notre
+                            <a href="" target="#">conditions d'utilisation</a>
                         </p>
 
                     </form>
