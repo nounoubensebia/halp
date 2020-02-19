@@ -56,23 +56,22 @@ position:absolute;
 
         <!-- Links -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-           <!-- Left -->
-           <ul class="navbar-nav mr-auto">
-              <li class="nav-item active">
-                <a class="nav-link waves-effect" href="#">Offres de service
-                  <span class="sr-only">(current)</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link waves-effect" href="#" target="_blank">
-                  Demandes de service
-                </a>
-              </li>
+
+            <ul class="nav nav-tabs md-tabs" id="myTabMD" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab-md" data-toggle="tab" href="#home-md" role="tab" aria-controls="home-md"
+                       aria-selected="true">Offres de service</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="profile-tab-md" data-toggle="tab" href="#profile-md" role="tab" aria-controls="profile-md"
+                       aria-selected="false">Demandes de service</a>
+                </li>
             </ul>
 
 
           <!-- Right -->
-         
+            <%if(session.getAttribute("user")!=null){
+            %>
           <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item">
               <a class="nav-link waves-effect waves-light">1
@@ -92,7 +91,8 @@ position:absolute;
               </div>
             </li>
           </ul>
-        
+            <%
+                }%>
 
         </div>
 
@@ -115,6 +115,10 @@ position:absolute;
     
       <!--Section: Content-->
       <section class="dark-grey-text">
+
+          <%if(session.getAttribute("user")!=null){
+             %>
+
           <div class="modal fade" id="modalRegisterForm" role="dialog" aria-labelledby="myModalLabel"
                aria-hidden="true">
               <div class="modal-dialog">
@@ -130,76 +134,76 @@ position:absolute;
                               <input name="user_id" id="user_id" value="<%if(session.getAttribute("user")!=null){
                                   User user = (User)session.getAttribute("user");
                               out.print(user.getId());}%>" hidden>
-                          <!-- Offre ou Demande -->
-                          <label class="mdb-main-label">Demande ou Offre ?</label>
-                          <select class="browser-default custom-select mb-4" name="isOffer" id="isOffer">
-                              <option value="1" selected>Offre de service</option>
-                              <option value="0">Demande de service</option>
-                          </select>
+                              <!-- Offre ou Demande -->
+                              <label class="mdb-main-label">Demande ou Offre ?</label>
+                              <select class="browser-default custom-select mb-4" name="isOffer" id="isOffer">
+                                  <option value="true" selected>Offre de service</option>
+                                  <option value="false">Demande de service</option>
+                              </select>
 
 
-                          <!-- Type -->
-                          <label class="mdb-main-label">Type de service</label>
-                          <select class="browser-default custom-select mb-4" name="service_type_id" id="service_type_id">
+                              <!-- Type -->
+                              <label class="mdb-main-label">Type de service</label>
+                              <select class="browser-default custom-select mb-4" name="service_type_id" id="service_type_id">
                                   <% List<ServiceType> serviceTypes = (List<ServiceType>)request.getAttribute("types");
-                                    for (ServiceType serviceType:serviceTypes) {
-                                        out.print("<option value="+serviceType.getId()+">"+serviceType.getName()+"</option>");
-                                    }%>
-                          </select>
+                                      for (ServiceType serviceType:serviceTypes) {
+                                          out.print("<option value="+serviceType.getId()+">"+serviceType.getName()+"</option>");
+                                      }%>
+                              </select>
 
 
-                          <!-- Nature -->
-                          <label class="mdb-main-label">Nature de service</label>
+                              <!-- Nature -->
+                              <label class="mdb-main-label">Nature de service</label>
                               <input type="text" name="service_nature_is_other" id="service_nature_is_other" value="" hidden>
-                          <select class="browser-default custom-select mb-4" name="service_nature_id" id="service_nature_id">
-                          <% List<ServiceNature> serviceNatures = (List<ServiceNature>)request.getAttribute("natures");
-                              for (ServiceNature serviceNature:serviceNatures) {
-                                  out.print("<option value="+serviceNature.getId()+">"+serviceNature.getNature()+"</option>");
-                              }%>
-                          <option value="autre">Autre</option>
-                          </select>
+                              <select class="browser-default custom-select mb-4" name="service_nature_id" id="service_nature_id">
+                                  <% List<ServiceNature> serviceNatures = (List<ServiceNature>)request.getAttribute("natures");
+                                      for (ServiceNature serviceNature:serviceNatures) {
+                                          out.print("<option value="+serviceNature.getId()+">"+serviceNature.getNature()+"</option>");
+                                      }%>
+                                  <option value="autre">Autre</option>
+                              </select>
                               <div id="autre">
-                              <label class="mdb-main-label">Autre</label>
-                              <input type="text" name="service_nature" id="service_nature" class="form-control mb-2" placeholder="Autre" aria-describedby="defaultRegisterFormPhoneHelpBlock">
+                                  <label class="mdb-main-label">Autre</label>
+                                  <input type="text" name="service_nature" id="service_nature" class="form-control mb-2" placeholder="Autre" aria-describedby="defaultRegisterFormPhoneHelpBlock">
                               </div>
 
 
                               <div class="form-row mb-4">
 
-                            <div class="col">
-                                  <label class="mdb-main-label">Date début</label>
-                                  <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
-                                      <input type="text" name="start_date" id="start_date" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
-                                      <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
-                                          <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                  <div class="col">
+                                      <label class="mdb-main-label">Date début</label>
+                                      <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                                          <input type="text" name="start_date" id="start_date" class="form-control datetimepicker-input" data-target="#datetimepicker7"/>
+                                          <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                          </div>
                                       </div>
                                   </div>
+
+                                  <div class="col">
+                                      <label class="mdb-main-label">Date fin</label>
+                                      <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                                          <input type="text" name="end_date" id="end_date" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
+                                          <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                                              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                          </div>
+                                      </div>
+                                  </div>
+
                               </div>
 
-                            <div class="col">
-                                <label class="mdb-main-label">Date fin</label>
-                                <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
-                                    <input type="text" name="end_date" id="end_date" class="form-control datetimepicker-input" data-target="#datetimepicker8"/>
-                                    <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
-                            </div>
+                              <!-- Localisation -->
+                              <label class="mdb-main-label">Adresse</label>
+                              <input type="text" name="province" id="province" class="form-control mb-2" placeholder="Département" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                              <input type="text" name="city" id="city" class="form-control mb-2" placeholder="Ville" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                              <input type="text" name="commune" id="commune" class="form-control mb-4" placeholder="Commune" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
 
-                          </div>
+                              <!-- Description -->
+                              <label class="mdb-main-label">Description courte</label>
+                              <textarea name="short_description" id="short_description" class="form-control mb-4" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="2" required></textarea>
 
-                          <!-- Localisation -->
-                          <label class="mdb-main-label">Adresse</label>
-                          <input type="text" name="province" id="province" class="form-control mb-2" placeholder="Département" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
-                          <input type="text" name="city" id="city" class="form-control mb-2" placeholder="Ville" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
-                          <input type="text" name="commune" id="commune" class="form-control mb-4" placeholder="Commune" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
-
-                          <!-- Description -->
-                          <label class="mdb-main-label">Description courte</label>
-                          <textarea name="short_description" id="short_description" class="form-control mb-4" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="2" required></textarea>
-
-                          <label class="mdb-main-label">Description Détaillée</label>
-                          <textarea name="long_description" id="long_description" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required></textarea>
+                              <label class="mdb-main-label">Description Détaillée</label>
+                              <textarea name="long_description" id="long_description" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required></textarea>
                       </div>
                       <div class="modal-footer d-flex justify-content-center">
                           <button class="btn btn-deep-orange">Enregistrer</button>
@@ -208,47 +212,88 @@ position:absolute;
                   </div>
               </div>
           </div>
-
           <div class="text-center">
               <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalRegisterForm">Nouveau Service</a>
           </div>
+          <%
+          }%>
+
         <!-- Heading -->
           <div class="card mb-4 wow fadeIn">
             <!--Card content-->
-            <div class="card-body">
 
-                <table id="dtBasicExample" class="table table-hover table-bordered" cellspacing="0" width="100%">
-                    <thead>
-                    <tr>
-                        <th class="th-sm">Référence du service
-                        </th>
-                        <th class="th-sm">Type
-                        </th>
-                        <th class="th-sm">Nature
-                        </th>
-                        <th class="th-sm">Description
-                        </th>
-                        <th class="th-sm">Voir service
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <% List<Service> services = (List<Service>)request.getAttribute("services");
-                        for (Service service:services) {
-                            out.print("<tr>\n" +
-                                    "                            <td>"+service.getReference()+"</td>\n" +
-                                    "                            <td>"+service.getServiceType().getName()+"</td>\n" +
-                                    "                            <td>"+service.getServiceNature().getNature()+"</td>\n" +
-                                    "                            <td>"+service.getShortDescription()+"</td>\n" +
-                                    "                            <td>\n" +
-                                    "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
-                                    "                            </td>\n" +
-                                    "                            </tr>");
-                        }
-                    %>
-                    </tbody>
-                </table>
-            </div>
+
+
+
+                <div class="tab-content card-body pt-5" id="myTabContentMD">
+                    <div class="tab-pane fade show active" id="home-md" role="tabpanel" aria-labelledby="home-tab-md">
+                        <table id="dtBasicExample" class="table table-hover table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th class="th-sm">Référence du service
+                                </th>
+                                <th class="th-sm">Type
+                                </th>
+                                <th class="th-sm">Nature
+                                </th>
+                                <th class="th-sm">Description
+                                </th>
+                                <th class="th-sm">Voir service
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% List<Service> offres = (List<Service>)request.getAttribute("offres");
+                                for (Service service:offres) {
+                                    out.print("<tr>\n" +
+                                            "                            <td>"+service.getReference()+"</td>\n" +
+                                            "                            <td>"+service.getServiceType().getName()+"</td>\n" +
+                                            "                            <td>"+service.getServiceNature().getNature()+"</td>\n" +
+                                            "                            <td>"+service.getShortDescription()+"</td>\n" +
+                                            "                            <td>\n" +
+                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
+                                            "                            </td>\n" +
+                                            "                            </tr>");
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="profile-md" role="tabpanel" aria-labelledby="profile-tab-md">
+                        <table id="dtBasicExample2" class="table table-hover table-bordered" cellspacing="0" width="100%">
+                            <thead>
+                            <tr>
+                                <th class="th-sm">Référence du service
+                                </th>
+                                <th class="th-sm">Type
+                                </th>
+                                <th class="th-sm">Nature
+                                </th>
+                                <th class="th-sm">Description
+                                </th>
+                                <th class="th-sm">Voir service
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <% List<Service> demandes = (List<Service>)request.getAttribute("demandes");
+                                for (Service service:demandes) {
+                                    out.print("<tr>\n" +
+                                            "                            <td>"+service.getReference()+"</td>\n" +
+                                            "                            <td>"+service.getServiceType().getName()+"</td>\n" +
+                                            "                            <td>"+service.getServiceNature().getNature()+"</td>\n" +
+                                            "                            <td>"+service.getShortDescription()+"</td>\n" +
+                                            "                            <td>\n" +
+                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
+                                            "                            </td>\n" +
+                                            "                            </tr>");
+                                }
+                            %>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
           </div>
       </section>
       <!--Section: Content-->
