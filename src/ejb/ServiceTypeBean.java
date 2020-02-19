@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,11 +14,14 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ServiceTypeBean extends Repository<ServiceType> {
+
+    @PersistenceContext
+    EntityManager em;
+
     @Override
     public List<ServiceType> getAll() {
-        EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<ServiceType> cq = cb.createQuery(ServiceType.class);
         Root<ServiceType> rootEntry = cq.from(ServiceType.class);
@@ -28,17 +32,14 @@ public class ServiceTypeBean extends Repository<ServiceType> {
 
     @Override
     public ServiceType findById(long id) {
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = em;
         return entityManager.find(ServiceType.class,id);
     }
 
     @Override
     public void save(ServiceType serviceType) throws TransactionException {
         try {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
         em.persist(serviceType);
-        em.getTransaction().commit();
         }
         catch (Exception e)
         {
@@ -51,11 +52,8 @@ public class ServiceTypeBean extends Repository<ServiceType> {
     @Override
     public void deleteById(long id) throws TransactionException {
         try {
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
             ServiceType service = em.find(ServiceType.class,id);
             em.remove(service);
-            em.getTransaction().commit();
         }
         catch (Exception e)
         {

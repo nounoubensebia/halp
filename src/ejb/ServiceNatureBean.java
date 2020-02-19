@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,11 +14,14 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ServiceNatureBean extends Repository<ServiceNature> {
+
+    @PersistenceContext
+    EntityManager em;
+
     @Override
     public List<ServiceNature> getAll() {
-        EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<ServiceNature> cq = cb.createQuery(ServiceNature.class);
         Root<ServiceNature> rootEntry = cq.from(ServiceNature.class);
@@ -28,17 +32,14 @@ public class ServiceNatureBean extends Repository<ServiceNature> {
 
     @Override
     public ServiceNature findById(long id) {
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = em;
         return entityManager.find(ServiceNature.class,id);
     }
 
     @Override
     public void save(ServiceNature serviceNature) throws TransactionException {
         try {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
         em.persist(serviceNature);
-        em.getTransaction().commit();
         }
         catch (Exception e)
         {
@@ -51,11 +52,9 @@ public class ServiceNatureBean extends Repository<ServiceNature> {
     @Override
     public void deleteById(long id) throws TransactionException {
         try {
-            EntityManager em = getEntityManager();
             em.getTransaction().begin();
             ServiceNature service = em.find(ServiceNature.class,id);
             em.remove(service);
-            em.getTransaction().commit();
         }
         catch (Exception e)
         {

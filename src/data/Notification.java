@@ -14,7 +14,7 @@ public class Notification {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @OneToOne
+    @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
@@ -44,7 +44,7 @@ public class Notification {
         return id;
     }
 
-    @OneToOne
+    @ManyToOne()
     @OnDelete(action = OnDeleteAction.CASCADE)
     public User getUser() {
         return user;

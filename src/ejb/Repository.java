@@ -7,11 +7,11 @@ import java.util.List;
 
 public abstract class Repository<T>  {
 
-    protected EntityManager getEntityManager()
+    /*protected EntityManager getEntityManager()
     {
         EntityManagerFactory emf = Persistence.createEntityManagerFactory("JSFTest");
         return emf.createEntityManager();
-    }
+    }*/
 
     public abstract List<T> getAll();
 

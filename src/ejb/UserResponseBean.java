@@ -4,10 +4,13 @@ import data.UserDetailsNotification;
 import data.UserResponse;
 import data.UserResponseNotification;
 
+import javax.annotation.Resource;
+import javax.ejb.SessionContext;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,13 +19,17 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class UserResponseBean extends Repository<UserResponse> {
 
+    @PersistenceContext
+    EntityManager em;
+
+    @Resource
+    private SessionContext sessionContext;
 
     @Override
     public List<UserResponse> getAll() {
-        EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<UserResponse> cq = cb.createQuery(UserResponse.class);
         Root<UserResponse> rootEntry = cq.from(UserResponse.class);
@@ -33,7 +40,7 @@ public class UserResponseBean extends Repository<UserResponse> {
 
     @Override
     public UserResponse findById(long id) {
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = em;
         return entityManager.find(UserResponse.class,id);
     }
 
@@ -42,8 +49,7 @@ public class UserResponseBean extends Repository<UserResponse> {
 
         try {
 
-            EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
+            EntityManager entityManager = em;
 
             userResponse.getService().setStatus(2);
             entityManager.merge(userResponse.getService());
@@ -77,12 +83,12 @@ public class UserResponseBean extends Repository<UserResponse> {
             entityManager.persist(userDetailsNotification);
 
 
-            entityManager.getTransaction().commit();
         }
         catch (Exception e)
         {
             TransactionException transactionException = new TransactionException("Transaction exception");
             transactionException.setStackTrace(e.getStackTrace());
+            e.printStackTrace();
             throw transactionException;
         }
 
@@ -91,13 +97,8 @@ public class UserResponseBean extends Repository<UserResponse> {
     @Override
     public void deleteById(long id) throws TransactionException {
         try {
-
-
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
             UserResponse userResponse = em.find(UserResponse.class, id);
             em.remove(userResponse);
-            em.getTransaction().commit();
         } catch (Exception e)
         {
             TransactionException transactionException = new TransactionException("Transaction exception");

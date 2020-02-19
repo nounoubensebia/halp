@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -13,12 +14,14 @@ import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class NotificationBean extends Repository<Notification> {
+
+    @PersistenceContext
+    EntityManager em;
 
     @Override
     public List<Notification> getAll() {
-        EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Notification> cq = cb.createQuery(Notification.class);
         Root<Notification> rootEntry = cq.from(Notification.class);
@@ -29,17 +32,15 @@ public class NotificationBean extends Repository<Notification> {
 
     @Override
     public Notification findById(long id) {
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = em;
         return entityManager.find(Notification.class,id);
     }
 
     @Override
     public void save(Notification notification) throws TransactionException {
         try {
-            EntityManager entityManager = getEntityManager();
-            entityManager.getTransaction().begin();
+            EntityManager entityManager = em;
             entityManager.persist(notification);
-            entityManager.getTransaction().commit();
         }
         catch (Exception e)
         {
@@ -52,11 +53,8 @@ public class NotificationBean extends Repository<Notification> {
     @Override
     public void deleteById(long id) throws TransactionException {
         try {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
         Notification notification = em.find(Notification.class,id);
         em.remove(notification);
-        em.getTransaction().commit();
         }
         catch (Exception e)
         {

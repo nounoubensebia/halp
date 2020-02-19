@@ -47,6 +47,8 @@ public class UserResponseController extends HttpServlet {
             userResponseBean.save(userResponse);
         } catch (TransactionException e) {
             resp.sendError(500);
+            //e.printStackTrace();
+            return;
         }
         //TODO redirect to notifications page
         resp.sendRedirect("notifications");

@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -19,13 +20,14 @@ import java.util.Collections;
 import java.util.List;
 
 @Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class UserBean extends Repository<User> {
 
+    @PersistenceContext
+    EntityManager em;
 
     @Override
     public List<User> getAll() {
-        EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<User> cq = cb.createQuery(User.class);
         Root<User> rootEntry = cq.from(User.class);
@@ -36,12 +38,12 @@ public class UserBean extends Repository<User> {
 
     @Override
     public User findById(long id) {
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = em;
         return entityManager.find(User.class,id);
     }
 
     public User findByEmail(String email) {
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = em;
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> cq = cb.createQuery(User.class);
         Root<User> rootEntry = cq.from(User.class);
@@ -56,11 +58,8 @@ public class UserBean extends Repository<User> {
     @Override
     public void save(User user) throws TransactionException {
         try {
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
             em.persist(user.getAddress());
             em.persist(user);
-            em.getTransaction().commit();
         }
         catch (Exception e)
         {
@@ -73,11 +72,8 @@ public class UserBean extends Repository<User> {
     public void update(User user) throws TransactionException
     {
         try {
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
             em.merge(user);
             em.merge(user.getAddress());
-            em.getTransaction().commit();
         } catch (Exception e)
         {
             TransactionException transactionException = new TransactionException("Transaction exception");
@@ -89,8 +85,6 @@ public class UserBean extends Repository<User> {
     @Override
     public void deleteById(long id) throws TransactionException {
         try {
-        EntityManager em = getEntityManager();
-        em.getTransaction().begin();
         User user = em.find(User.class,id);
         List<User> relatedUsers = getRelatedUsers(em,user);
         for (User user1:relatedUsers)
@@ -100,7 +94,6 @@ public class UserBean extends Repository<User> {
             em.persist(notification);
         }
         em.remove(user);
-        em.getTransaction().commit();
         } catch (Exception e)
         {
             TransactionException transactionException = new TransactionException("Transaction exception");

@@ -26,7 +26,6 @@
 <script type="text/javascript">
     // Animations initialization
     new WOW().init();
-
 </script>
 
 <script>
@@ -66,7 +65,6 @@
             $('#datetimepicker7').datetimepicker('maxDate', e.date);
         });
     });
-
 </script>
 <script>
     $('#autre').hide();
@@ -75,7 +73,6 @@
         if($('#service_nature_id').val() == 'autre') {
             $('#autre').show();
             $('#service_nature_is_other').attr('value', 'true')
-
         }else{
             $('#autre').hide();
             $('#service_nature_is_other').attr('value', 'false')

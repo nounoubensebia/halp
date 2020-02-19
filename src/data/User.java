@@ -21,6 +21,18 @@ public class User {
     private String description;
     private boolean isAdmin;
 
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
+    private List<Notification> notifications;
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
+    public List<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(List<Notification> notifications) {
+        this.notifications = notifications;
+    }
+
     @OneToOne(cascade = {CascadeType.REMOVE} )
     private Address address;
 

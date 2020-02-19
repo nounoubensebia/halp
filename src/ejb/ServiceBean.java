@@ -5,10 +5,8 @@ import data.Service;
 import data.ServiceValidationNotification;
 import data.User;
 
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
-import javax.ejb.TransactionManagementType;
+import javax.annotation.Resource;
+import javax.ejb.*;
 import javax.persistence.*;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -20,15 +18,19 @@ import java.util.List;
 
 
 @Stateless
-@TransactionManagement(TransactionManagementType.BEAN)
+@TransactionManagement(TransactionManagementType.CONTAINER)
 public class ServiceBean extends Repository<Service> {
 
 
+    @Resource
+    private SessionContext sessionContext;
+
+    @PersistenceContext
+    EntityManager em;
 
     @Override
     public List<Service> getAll()
     {
-        EntityManager em = getEntityManager();
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Service> cq = cb.createQuery(Service.class);
         Root<Service> rootEntry = cq.from(Service.class);
@@ -40,16 +42,17 @@ public class ServiceBean extends Repository<Service> {
     @Override
     public Service findById(long id)
     {
-        EntityManager entityManager = getEntityManager();
+        EntityManager entityManager = em;
         return entityManager.find(Service.class,id);
     }
 
     @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void save(Service service) throws TransactionException
     {
         try {
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
+            //EntityManager em = getEntityManager();
+            //em.getTransaction().begin();
             em.persist(service.getLocation());
             if (service.getServiceNature().isOther())
             {
@@ -74,11 +77,12 @@ public class ServiceBean extends Repository<Service> {
                 em.persist(serviceValidationNotification);
             }
 
-            em.getTransaction().commit();
+            //em.getTransaction().commit();
         } catch (Exception e)
         {
             TransactionException transactionException = new TransactionException("Transaction exception");
             transactionException.setStackTrace(e.getStackTrace());
+            e.printStackTrace();
             throw transactionException;
         }
     }
@@ -105,15 +109,12 @@ public class ServiceBean extends Repository<Service> {
     public void update (Service service) throws TransactionException
     {
         try {
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
             em.merge(service.getLocation());
             if (service.getServiceNature().isOther())
             {
                 em.merge(service.getServiceNature());
             }
             em.merge(service);
-            em.getTransaction().commit();
         }
         catch (Exception e)
         {
@@ -126,8 +127,7 @@ public class ServiceBean extends Repository<Service> {
     public void validate(Service service) throws TransactionException
     {
         try {
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
+
             service.setStatus(1);
             em.merge(service);
             String message = "Votre ";
@@ -143,7 +143,6 @@ public class ServiceBean extends Repository<Service> {
             Notification notification = new ServiceValidationNotification(service.getUser(), LocalDateTime.now(),
                     message,service);
             em.persist(notification);
-            em.getTransaction().commit();
         }
         catch (Exception e)
         {
@@ -156,8 +155,6 @@ public class ServiceBean extends Repository<Service> {
     public void adminDelete(long id) throws TransactionException
     {
         try {
-            EntityManager em = getEntityManager();
-            em.getTransaction().begin();
             String message = "Votre ";
             Service service = em.find(Service.class,id);
             if (service.isOffer())
@@ -172,7 +169,6 @@ public class ServiceBean extends Repository<Service> {
             Notification notification = new Notification(service.getUser(),LocalDateTime.now(),message);
             em.persist(notification);
             em.remove(service);
-            em.getTransaction().commit();
         }
         catch (Exception e)
         {
@@ -187,11 +183,9 @@ public class ServiceBean extends Repository<Service> {
     {
         //TODO check cascade
         try {
-            EntityManager em = getEntityManager();
             em.getTransaction().begin();
             Service service = em.find(Service.class,id);
             em.remove(service);
-            em.getTransaction().commit();
         }
         catch (Exception e)
         {
