@@ -3,6 +3,9 @@
 <%@ page import="data.ServiceType" %>
 <%@ page import="data.ServiceNature" %>
 <%@ page import="data.User" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="utils.DateUtils" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -236,6 +239,12 @@ position:absolute;
                                 </th>
                                 <th class="th-sm">Nature
                                 </th>
+                                <th class="th-sm">Utilisateur
+                                </th>
+                                <th class="th-sm">Date début
+                                </th>
+                                <th class="th-sm">Date fin
+                                </th>
                                 <th class="th-sm">Description
                                 </th>
                                 <th class="th-sm">Voir service
@@ -249,9 +258,12 @@ position:absolute;
                                             "                            <td>"+service.getReference()+"</td>\n" +
                                             "                            <td>"+service.getServiceType().getName()+"</td>\n" +
                                             "                            <td>"+service.getServiceNature().getNature()+"</td>\n" +
+                                            "                            <td>"+service.getUser().getUserName()+"</td>\n" +
+                                            "                            <td>"+service.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+"</td>\n" +
+                                            "                            <td>"+service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+"</td>\n" +
                                             "                            <td>"+service.getShortDescription()+"</td>\n" +
                                             "                            <td>\n" +
-                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
+                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"service?service_id="+service.getId()+"\"><i class=\"fas fa-angle-right\"></i></a>\n" +
                                             "                            </td>\n" +
                                             "                            </tr>");
                                 }
@@ -269,6 +281,12 @@ position:absolute;
                                 </th>
                                 <th class="th-sm">Nature
                                 </th>
+                                <th class="th-sm">Utilisateur
+                                </th>
+                                <th class="th-sm">Date début
+                                </th>
+                                <th class="th-sm">Date fin
+                                </th>
                                 <th class="th-sm">Description
                                 </th>
                                 <th class="th-sm">Voir service
@@ -282,6 +300,9 @@ position:absolute;
                                             "                            <td>"+service.getReference()+"</td>\n" +
                                             "                            <td>"+service.getServiceType().getName()+"</td>\n" +
                                             "                            <td>"+service.getServiceNature().getNature()+"</td>\n" +
+                                            "                            <td>"+service.getUser().getUserName()+"</td>\n" +
+                                            "                            <td>"+service.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+"</td>\n" +
+                                            "                            <td>"+service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+"</td>\n" +
                                             "                            <td>"+service.getShortDescription()+"</td>\n" +
                                             "                            <td>\n" +
                                             "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
