@@ -195,4 +195,18 @@ public class ServiceBean extends Repository<Service> {
         }
     }
 
+    @Schedule(second = "30", minute = "40", hour="02", dayOfWeek = "*", dayOfMonth = "*", year = "*", info = "MySchedular")
+    public void verifyObsolete()
+    {
+        List<Service> services = getAll();
+        for (Service service:services)
+        {
+            if (service.getStatus()!=3&&service.getEndDate().isBefore(LocalDateTime.now()))
+            {
+                service.setStatus(3);
+                em.persist(service);
+            }
+        }
+    }
+
 }
