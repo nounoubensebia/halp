@@ -59,12 +59,16 @@ public class UserResponseBean extends Repository<UserResponse> {
             entityManager.persist(userResponse);
 
             //saving user response notification
-            String message = "L'utilisatuer " + userResponse.getUser().getUserName() + " a répondu à votre ";
+            String message = "L'utilisateur ayant les informations suivantes<br>" + userResponse.getUser().getNotificationInfo()
+                    + " a répondu à votre ";
             if (userResponse.getService().isOffer()) {
-                message += "offre de service";
+                message += "offre de service ayant pour référence "+userResponse.getService().getReference();
             } else {
-                message += "demande de service";
+                message += "demande de service ayant pour référence "+userResponse.getService().getReference();
             }
+
+                message+="<br>cet utilisateur vous a adréssé le message suivant : "+userResponse.getMessage();
+
             UserResponseNotification userResponseNotification = new UserResponseNotification(userResponse.getService().getUser(),
                     LocalDateTime.now(), message, userResponse);
             entityManager.persist(userResponseNotification);
@@ -76,7 +80,7 @@ public class UserResponseBean extends Repository<UserResponse> {
             } else {
                 message += "la demande de service";
             }
-            message += " de l'utilisateur " + userResponse.getUser().getUserName();
+            message += " de l'utilisateur ayant les informations suivantes : " + userResponse.getUser().getNotificationInfo();
 
             UserDetailsNotification userDetailsNotification = new UserDetailsNotification(userResponse.getUser(),
                     LocalDateTime.now(), message, userResponse.getService().getUser());

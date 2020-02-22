@@ -137,4 +137,16 @@ public class User {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public String getNotificationInfo()
+    {
+        String s = "Nom : "+lastName;
+        s+="<br>Prénom : "+firstName;
+        s+="<br>Pseudonyme : "+userName;
+        s+="<br>Email : "+email;
+        s+="<br>Téléphone : "+phone;
+        s+="<br>Adresse : "+address.getStreet()+", "+address.getCity()+", "+address.getSupplement();
+        s+="<br>Description personnel : "+description;
+        return s;
+    }
 }

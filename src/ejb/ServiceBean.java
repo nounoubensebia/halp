@@ -139,7 +139,7 @@ public class ServiceBean extends Repository<Service> {
             {
                 message+= "demande de service ";
             }
-            message+="validée";
+            message+=" ayant pour référence "+ service.getReference()+" a été validée";
             Notification notification = new ServiceValidationNotification(service.getUser(), LocalDateTime.now(),
                     message,service);
             em.persist(notification);
@@ -159,11 +159,11 @@ public class ServiceBean extends Repository<Service> {
             Service service = em.find(Service.class,id);
             if (service.isOffer())
             {
-                message += "offre de service";
+                message += "offre de service ";
             }
             else
             {
-                message += "demande de service";
+                message += "demande de service ";
             }
             message+="ayant pour référence "+service.getReference()+" a été supprimée par l'administrateur";
             Notification notification = new Notification(service.getUser(),LocalDateTime.now(),message);
