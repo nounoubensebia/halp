@@ -210,4 +210,20 @@ public class ServiceBean extends Repository<Service> {
         }
     }
 
+    public List<Service> getUserServices (User user)
+    {
+        List<Service> all = getAll();
+        List<Service> userServices = new ArrayList<>();
+        for (Service service: all)
+        {
+            if (service.getUser().getId()==user.getId())
+            {
+                userServices.add(service);
+            }
+        }
+
+        return userServices;
+
+    }
+
 }

@@ -48,6 +48,11 @@
                 "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
             },
         });
+        $('#dtBasicExample3').DataTable({
+            "language": {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+            },
+        });
     });
 </script>
 <script>

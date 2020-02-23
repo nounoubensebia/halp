@@ -5,6 +5,7 @@ import ejb.*;
 import utils.DateUtils;
 
 import javax.ejb.EJB;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -69,5 +70,6 @@ public class CreateServiceController extends HttpServlet {
                 isOffer,status,location,serviceType,serviceNature);
 
         serviceBean.save(service);
+        resp.sendRedirect("Servlet");
     }
 }

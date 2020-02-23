@@ -101,11 +101,7 @@
 
                     <div class="row">
 
-                        <div class="col-md-6">
-                            <img class="img-fluid rounded-left" src="https://mdbootstrap.com/img/Photos/Vertical/7.jpg" alt="project image">
-                        </div>
-
-                        <div class="col-md-6 p-5 align-self-center">
+                        <div class="p-5 align-self-center">
                             <%
                                 Service service = (Service) request.getAttribute("Service");
                             %>

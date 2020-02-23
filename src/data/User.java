@@ -30,6 +30,10 @@ public class User {
         return notifications;
     }
 
+
+
+
+
     public void setNotifications(List<Notification> notifications) {
         this.notifications = notifications;
     }
@@ -179,5 +183,6 @@ public class User {
         }
         return unseen;
     }
+
 
 }
