@@ -128,6 +128,7 @@ public class ServiceBean extends Repository<Service> {
     {
         try {
 
+            
             service.setStatus(1);
             em.merge(service);
             String message = "Votre ";
