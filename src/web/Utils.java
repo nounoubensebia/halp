@@ -10,8 +10,11 @@ public class Utils {
 
     public static User getUser(HttpServletRequest req, UserBean userBean)
     {
-        //return (User)req.getSession().getAttribute("user");
-        return userBean.findById(Long.parseLong(req.getParameter("user_id")));
+        //return
+        if (req.getParameter("user_id")!=null)
+            return (User)req.getSession().getAttribute("user");
+        else
+            return null;
     }
 
     public static void deleteUser(HttpServletRequest req, UserBean userBean)

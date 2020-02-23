@@ -21,10 +21,10 @@ public class User {
     private String description;
     private boolean isAdmin;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     private List<Notification> notifications;
 
-    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE})
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.REMOVE}, fetch = FetchType.EAGER)
     public List<Notification> getNotifications() {
         return notifications;
     }
@@ -138,6 +138,7 @@ public class User {
         this.description = description;
     }
 
+    @Transient
     public String getNotificationInfo()
     {
         String s = "Nom : "+lastName;

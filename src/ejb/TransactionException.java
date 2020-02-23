@@ -1,6 +1,8 @@
 package ejb;
 
-public class TransactionException extends Exception {
+import javax.servlet.ServletException;
+
+public class TransactionException extends ServletException {
 
     public TransactionException(String message) {
         super(message);

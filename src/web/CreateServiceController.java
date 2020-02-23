@@ -30,16 +30,16 @@ public class CreateServiceController extends HttpServlet {
     @EJB
     ServiceNatureBean serviceNatureBean;
 
-    private User getUser(HttpServletRequest req)
-    {
-        return (User)req.getSession().getAttribute("user");
-        //return userBean.findById(Long.parseLong(req.getParameter("user_id")));
-    }
+
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        User user = getUser(req);
+        User user = Utils.getUser(req,userBean);
+        if (user==null)
+        {
+            throw new SecurityException();
+        }
         DateTimeFormatter formatter = DateUtils.getStandardFormatter();
         LocalDateTime startDate =  LocalDate.parse(req.getParameter("start_date"),formatter).atStartOfDay();
         LocalDateTime endDate = LocalDate.parse(req.getParameter("end_date"),formatter).atStartOfDay();
@@ -67,11 +67,7 @@ public class CreateServiceController extends HttpServlet {
 
         Service service = new Service(user,startDate,endDate,creationDate,shortDescription,longDescription,
                 isOffer,status,location,serviceType,serviceNature);
-        try {
-            serviceBean.save(service);
-            resp.sendRedirect("Servlet");
-        } catch (TransactionException e) {
-            resp.sendError(500);
-        }
+
+        serviceBean.save(service);
     }
 }
