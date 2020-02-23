@@ -77,8 +77,8 @@ position:absolute;
             %>
           <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item">
-              <a class="nav-link waves-effect waves-light"><%User user = (User)session.getAttribute("user");
-              out.print(user.getNotifications().size());%>
+              <a class="nav-link waves-effect waves-light" href="notifications"><%User user = (User)session.getAttribute("user");
+              out.print(user.getUnseenNotifications().size());%>
                 <i class="fas fa-bell"></i>
               </a>
             </li>

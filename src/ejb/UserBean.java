@@ -139,4 +139,14 @@ public class UserBean extends Repository<User> {
         return false;
     }
 
+    public void setAllNotificationsToSeen(User user)
+    {
+        List<Notification> notifications = findById(user.getId()).getUnseenNotifications();
+        for (Notification notification : notifications)
+        {
+            notification.setStatus(1);
+            em.persist(notification);
+        }
+    }
+
 }

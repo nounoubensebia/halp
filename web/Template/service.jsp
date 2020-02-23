@@ -153,16 +153,16 @@
                                 %>
                                 <li>
                                     <div class="d-flex justify-content-start">
-                                        <a class="btn btn-outline-secondary" type="button" href="#">
+
                                             <%if(service.isOffer()){
                                             %>
-                                            Accepter l'offre
+                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Accepter l'offre</a>
                                             <%}else{
                                             %>
-                                            Proposer votre service
+                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Proposer votre service</a>
                                             <%}
                                             %>
-                                        </a>
+
                                     </div>
                                 </li>
                                 <%}%>
@@ -176,7 +176,33 @@
                 </div>
 
             </section>
+            <div class="modal fade" id="modalContactForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body mx-3">
+                           <form method="post" action="create-user-response">
 
+                            <div class="md-form">
+                                <i class="fas fa-pencil prefix grey-text"></i>
+                                <textarea type="text" name="message" id="message" class="md-textarea form-control" rows="4"></textarea>
+                                <label data-error="wrong" data-success="right" for="message">Votre message</label>
+                            </div>
+                               <input name="service_id" id="service_id" value="<%out.print(service.getId());%>" hidden>
+
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-unique" type="submit" >Envoyer <i class="fas fa-paper-plane-o ml-1"></i></button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </main>
     <!--Footer-->

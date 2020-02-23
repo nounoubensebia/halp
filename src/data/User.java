@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -150,4 +151,33 @@ public class User {
         s+="<br>Description personnel : "+description;
         return s;
     }
+
+    @Transient
+    public List<Notification> getUnseenNotifications()
+    {
+        List<Notification> unseen = new ArrayList<>();
+        for (Notification notification:notifications)
+        {
+            if (notification.getStatus()==0)
+            {
+                unseen.add(notification);
+            }
+        }
+        return unseen;
+    }
+
+    @Transient
+    public List<Notification> getSeenNotifications()
+    {
+        List<Notification> unseen = new ArrayList<>();
+        for (Notification notification:notifications)
+        {
+            if (notification.getStatus()==1)
+            {
+                unseen.add(notification);
+            }
+        }
+        return unseen;
+    }
+
 }

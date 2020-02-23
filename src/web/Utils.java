@@ -12,7 +12,11 @@ public class Utils {
     {
         //return
         if (req.getSession().getAttribute("user")!=null)
-            return (User)req.getSession().getAttribute("user");
+        {
+            long user_id = ((User)req.getSession().getAttribute("user")).getId();
+            return userBean.findById(user_id);
+        }
+
         else
             return null;
     }

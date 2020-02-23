@@ -6,6 +6,7 @@ import data.ServiceType;
 import ejb.ServiceBean;
 import ejb.ServiceNatureBean;
 import ejb.ServiceTypeBean;
+import ejb.UserBean;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -28,9 +29,13 @@ public class IndexServlet extends HttpServlet {
     @EJB
     ServiceNatureBean serviceNatureBean;
 
+    @EJB
+    UserBean userBean;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("Template/home.jsp");
+        Utils.getUser(req,userBean);
         List<Service> services = serviceBean.getAll();
         List<Service> validDemandes = getValidDemandes(services);
         List<Service> validOffres = getValidOffres(services);
