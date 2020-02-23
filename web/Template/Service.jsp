@@ -61,8 +61,9 @@
                 %>
                 <ul class="navbar-nav ml-auto nav-flex-icons">
                     <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light">1
-                            <i class="fas fa-envelope"></i>
+                        <a class="nav-link waves-effect waves-light" href="notifications"><%User user = (User)session.getAttribute("user");
+                            out.print(user.getUnseenNotifications().size());%>
+                            <i class="fas fa-bell"></i>
                         </a>
                     </li>
                     <li class="nav-item dropdown">
@@ -70,14 +71,13 @@
                            aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-user"></i>
                             <%
-                                User user = (User)session.getAttribute("user");
                                 out.print(user.getFirstName());%>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right dropdown-default"
                              aria-labelledby="navbarDropdownMenuLink-333">
-                            <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item" href="#">Mon profile</a>
+                            <a class="dropdown-item" href="#">Mes Service</a>
+                            <a class="dropdown-item" href="#">Logout</a>
                         </div>
                     </li>
                 </ul>
@@ -154,14 +154,15 @@
                                 <li>
                                     <div class="d-flex justify-content-start">
 
-                                            <%if(service.isOffer()){
-                                            %>
-                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Accepter l'offre</a>
-                                            <%}else{
-                                            %>
-                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">Proposer votre service</a>
-                                            <%}
-                                            %>
+                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
+                                                <%if(service.isOffer()){
+                                                %>Accepter l'offre
+                                                <%}else{
+                                                %>Proposer votre service
+                                                <%}
+                                                %>
+                                            </a>
+
 
                                     </div>
                                 </li>
