@@ -80,7 +80,8 @@ public class UserResponseBean extends Repository<UserResponse> {
             } else {
                 message += "la demande de service";
             }
-            message += " de l'utilisateur ayant les informations suivantes : " + userResponse.getUser().getNotificationInfo();
+            message += " ayant pour référence "+ userResponse.getService().getReference()+
+                    " de l'utilisateur ayant les informations suivantes : <br>" + userResponse.getUser().getNotificationInfo();
 
             UserDetailsNotification userDetailsNotification = new UserDetailsNotification(userResponse.getUser(),
                     LocalDateTime.now(), message, userResponse.getService().getUser());

@@ -20,6 +20,7 @@ public class Notification {
 
     private LocalDateTime localDateTime;
 
+    @Column(columnDefinition = "text")
     private String message;
 
     private int status;
@@ -62,6 +63,7 @@ public class Notification {
         this.localDateTime = localDateTime;
     }
 
+    @Column(columnDefinition = "text")
     public String getMessage() {
         return message;
     }

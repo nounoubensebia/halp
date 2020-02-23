@@ -14,7 +14,8 @@ public class Utils {
         if (req.getSession().getAttribute("user")!=null)
         {
             long user_id = ((User)req.getSession().getAttribute("user")).getId();
-            return userBean.findById(user_id);
+            req.getSession().setAttribute("user",userBean.findById(user_id));
+            return (User)req.getSession().getAttribute("user");
         }
 
         else

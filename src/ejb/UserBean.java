@@ -39,7 +39,9 @@ public class UserBean extends Repository<User> {
     @Override
     public User findById(long id) {
         EntityManager entityManager = em;
-        return entityManager.find(User.class,id);
+        User user = entityManager.find(User.class,id);
+        entityManager.refresh(user);
+        return user;
     }
 
     public User findByEmail(String email) {
