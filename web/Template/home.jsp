@@ -79,7 +79,7 @@ position:absolute;
             <li class="nav-item">
               <a class="nav-link waves-effect waves-light"><%User user = (User)session.getAttribute("user");
               out.print(user.getNotifications().size());%>
-                <i class="fas fa-envelope"></i>
+                <i class="fas fa-bell"></i>
               </a>
             </li>
             <li class="nav-item dropdown">
@@ -91,9 +91,9 @@ position:absolute;
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-default"
                 aria-labelledby="navbarDropdownMenuLink-333">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
+                <a class="dropdown-item" href="#">Mon profile</a>
+                <a class="dropdown-item" href="#">Mes Service</a>
+                <a class="dropdown-item" href="#">Logout</a>
               </div>
             </li>
           </ul>
@@ -306,7 +306,7 @@ position:absolute;
                                             "                            <td>"+service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy"))+"</td>\n" +
                                             "                            <td>"+service.getShortDescription()+"</td>\n" +
                                             "                            <td>\n" +
-                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"Servlet\"><i class=\"fas fa-angle-right\"></i></a>\n" +
+                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"service?service_id="+service.getId()+"\"><i class=\"fas fa-angle-right\"></i></a>\n" +
                                             "                            </td>\n" +
                                             "                            </tr>");
                                 }

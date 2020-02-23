@@ -47,7 +47,7 @@ public class IndexServlet extends HttpServlet {
     public List<Service> getValidDemandes(List<Service> services){
         List<Service> validDemandes = new ArrayList<>();
         for (Service service:services) {
-            if (service.getStatus() == 0 && !service.isOffer()){
+            if (service.getStatus() == 1 && !service.isOffer()){
                 validDemandes.add(service);
             }
         }
@@ -57,7 +57,7 @@ public class IndexServlet extends HttpServlet {
     public List<Service> getValidOffres(List<Service> services){
         List<Service> validOffres = new ArrayList<>();
         for (Service service:services) {
-            if (service.getStatus() == 0 && service.isOffer()){
+            if (service.getStatus() == 1 && service.isOffer()){
                 validOffres.add(service);
             }
         }

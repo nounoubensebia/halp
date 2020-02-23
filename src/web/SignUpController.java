@@ -59,7 +59,7 @@ public class SignUpController extends UnauthenticatedServlet {
         } catch (TransactionException e) {
             resp.sendError(500);
         }
-        RequestDispatcher rd = req.getRequestDispatcher("Template/signin.jsp");
+        RequestDispatcher rd = req.getRequestDispatcher("/signin");
         rd.forward(req,resp);
     }
 }

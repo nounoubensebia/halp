@@ -11,7 +11,7 @@ public class Utils {
     public static User getUser(HttpServletRequest req, UserBean userBean)
     {
         //return
-        if (req.getParameter("user_id")!=null)
+        if (req.getSession().getAttribute("user")!=null)
             return (User)req.getSession().getAttribute("user");
         else
             return null;
