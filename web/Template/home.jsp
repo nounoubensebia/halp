@@ -77,7 +77,8 @@ position:absolute;
             %>
           <ul class="navbar-nav ml-auto nav-flex-icons">
             <li class="nav-item">
-              <a class="nav-link waves-effect waves-light">1
+              <a class="nav-link waves-effect waves-light"><%User user = (User)session.getAttribute("user");
+              out.print(user.getNotifications().size());%>
                 <i class="fas fa-envelope"></i>
               </a>
             </li>
@@ -85,7 +86,7 @@ position:absolute;
               <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-user"></i>
-                  <%User user = (User)session.getAttribute("user");
+                  <%
                       out.print(user.getFirstName());%>
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-default"
