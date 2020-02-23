@@ -2,8 +2,10 @@ package web;
 
 
 import data.Service;
+import data.User;
 import ejb.ServiceBean;
 import ejb.TransactionException;
+import ejb.UserBean;
 
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -19,8 +21,16 @@ public class ValidateServiceController extends HttpServlet {
     @EJB
     ServiceBean serviceBean;
 
+    @EJB
+    UserBean userBean;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        User user = Utils.getUser(req,userBean);
+        if (user==null||!user.isAdmin())
+        {
+            throw new SecurityException();
+        }
         long id = Long.parseLong(req.getParameter("service_id"));
         Service service = serviceBean.findById(id);
         try {

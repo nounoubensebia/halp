@@ -37,7 +37,6 @@ public class LoginController extends HttpServlet {
         {
             req.getSession().setAttribute("user",user);
             resp.sendRedirect("Servlet");
-            
         }
         else
         {
