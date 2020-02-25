@@ -31,25 +31,10 @@ public class ValidateServiceController extends HttpServlet {
         {
             throw new SecurityException();
         }
-        long id = Long.parseLong(req.getParameter("service_id"));
-        Service service = serviceBean.findById(id);
-        try {
-            serviceBean.validate(service);
-        } catch (TransactionException e) {
-            resp.sendError(500);
-        }
+        Service service = serviceBean.findById(Long.parseLong(req.getParameter("service_id_valider")));
+        serviceBean.validate(service);
+        resp.sendRedirect("Servlet");
+
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        long id = Long.parseLong(req.getParameter("service_id"));
-        //Service service = serviceBean.findById(id);
-        try {
-        serviceBean.adminDelete(id);
-        }
-        catch (TransactionException e)
-        {
-            resp.sendError(500);
-        }
-    }
 }

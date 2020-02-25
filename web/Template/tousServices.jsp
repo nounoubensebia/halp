@@ -1,11 +1,6 @@
 <%@ page import="data.Service" %>
 <%@ page import="java.util.List" %>
-<%@ page import="data.ServiceType" %>
-<%@ page import="data.ServiceNature" %>
 <%@ page import="data.User" %>
-<%@ page import="java.time.format.DateTimeFormatter" %>
-<%@ page import="java.time.LocalDate" %>
-<%@ page import="utils.DateUtils" %>
 <!DOCTYPE html>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
@@ -14,7 +9,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Mes Services</title>
+    <title>Admin</title>
     <jsp:include page="importsCss.jsp" />
     <style>
 
@@ -115,35 +110,35 @@
                 <!--Card content-->
 
                 <div class="card-body pt-5">
-                        <table id="dtBasicExample3" class="table table-hover table-bordered" cellspacing="0" width="100%">
-                            <thead>
-                            <tr>
-                                <th class="th-sm">Description
-                                </th>
-                                <th class="th-sm">Offre/Demande
-                                </th>
-                                <th class="th-sm">Statut
-                                </th>
-                                <th class="th-sm">Voir service
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <%
-                                List<Service> mesServices = (List<Service>)request.getAttribute("mesServices");
-                                for (Service service:mesServices) {
-                                    out.print("<tr>\n" +
-                                            "                            <td>"+service.getShortDescription()+"</td>\n" +
-                                            "                            <td>"+service.isOffer()+"</td>\n" +
-                                            "                            <td>"+service.getStatus()+"</td>\n" +
-                                            "                            <td>\n" +
-                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"service?service_id="+service.getId()+"\"><i class=\"fas fa-angle-right\"></i></a>\n" +
-                                            "                            </td>\n" +
-                                            "                            </tr>");
-                                }
-                            %>
-                            </tbody>
-                        </table>
+                    <table id="dtBasicExample3" class="table table-hover table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <tr>
+                            <th class="th-sm">Référence
+                            </th>
+                            <th class="th-sm">Offre/Demande
+                            </th>
+                            <th class="th-sm">Statut
+                            </th>
+                            <th class="th-sm">Voir service
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <%
+                            List<Service> tousServices = (List<Service>)request.getAttribute("tousServices");
+                            for (Service service:tousServices) {
+                                out.print("<tr>\n" +
+                                        "                            <td>"+service.getReference()+"</td>\n" +
+                                        "                            <td>"+service.isOffer()+"</td>\n" +
+                                        "                            <td>"+service.getStatus()+"</td>\n" +
+                                        "                            <td>\n" +
+                                        "                                <a class=\"btn-floating btn-sm btn-default\" href=\"service?service_id="+service.getId()+"\"><i class=\"fas fa-angle-right\"></i></a>\n" +
+                                        "                            </td>\n" +
+                                        "                            </tr>");
+                            }
+                        %>
+                        </tbody>
+                    </table>
 
                 </div>
 
@@ -174,3 +169,4 @@
 </body>
 
 </html>
+
