@@ -258,7 +258,7 @@
                                 <textarea name="long_description" id="long_description" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required><%out.print(service.getLongDescription());%></textarea>
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
-                            <button class="btn btn-deep-orange">Enregistrer</button>
+                            <button class="btn btn-deep-orange" type="submit">Enregistrer</button>
                         </div>
                         </form>
                     </div>
@@ -279,8 +279,11 @@
                             Voulez-vous supprimer ce service?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
-                            <button type="button" class="btn btn-primary">Supprimer</button>
+                            <form method="post" action="delete-service">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <input name="service_id_delete" id="service_id_delete" value="<%out.print(service.getId());%>" hidden>
+                                <button class="btn btn-primary" type="submit">Supprimer</button>
+                            </form>
                         </div>
                     </div>
                 </div>

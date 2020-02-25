@@ -1,10 +1,7 @@
 package web;
 
 import data.*;
-import ejb.ServiceBean;
-import ejb.ServiceNatureBean;
-import ejb.ServiceTypeBean;
-import ejb.UserBean;
+import ejb.*;
 import utils.DateUtils;
 
 import javax.ejb.EJB;
@@ -21,9 +18,6 @@ import java.time.format.DateTimeFormatter;
 
 @WebServlet("/update-service")
 public class EditServiceController extends HttpServlet {
-
-    @EJB
-    UserBean userBean;
 
     @EJB
     ServiceBean serviceBean;
@@ -50,4 +44,6 @@ public class EditServiceController extends HttpServlet {
 
     }
 }
+
+
 

@@ -194,7 +194,6 @@ public class ServiceBean extends Repository<Service> {
     {
         //TODO check cascade
         try {
-            em.getTransaction().begin();
             Service service = em.find(Service.class,id);
             em.remove(service);
         }
