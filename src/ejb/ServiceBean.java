@@ -12,6 +12,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import javax.servlet.ServletRequest;
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,15 +107,24 @@ public class ServiceBean extends Repository<Service> {
         return admins;
     }
 
+    @TransactionAttribute(TransactionAttributeType.REQUIRED)
     public void update (Service service) throws TransactionException
     {
+        Service service1 = findById(service.getId());
+        service1.getLocation().setCity(service.getLocation().getCity());
+        service1.getLocation().setCommune(service.getLocation().getCommune());
+        service1.getLocation().setProvince(service.getLocation().getProvince());
+        service1.setLongDescription(service.getLongDescription());
+        service1.setShortDescription(service.getShortDescription());
+        service1.setStartDate(service.getStartDate());
+        service1.setEndDate(service.getEndDate());
         try {
-            em.merge(service.getLocation());
-            if (service.getServiceNature().isOther())
-            {
-                em.merge(service.getServiceNature());
-            }
-            em.merge(service);
+            em.merge(service1.getLocation());
+//            if (service.getServiceNature().isOther())
+//            {
+//                em.merge(service.getServiceNature());
+//            }
+            em.merge(service1);
         }
         catch (Exception e)
         {
@@ -128,11 +138,11 @@ public class ServiceBean extends Repository<Service> {
     {
         try {
 
-            
+            Service service1 = findById(service.getId());
             service.setStatus(1);
             em.merge(service);
             String message = "Votre ";
-            if (service.isOffer())
+            if (service1.isOffer())
             {
                 message+= "offre de service ";
             }
@@ -141,8 +151,8 @@ public class ServiceBean extends Repository<Service> {
                 message+= "demande de service ";
             }
             message+=" ayant pour référence "+ service.getReference()+" a été validée";
-            Notification notification = new ServiceValidationNotification(service.getUser(), LocalDateTime.now(),
-                    message,service);
+            Notification notification = new ServiceValidationNotification(service1.getUser(), LocalDateTime.now(),
+                    message,service1);
             em.persist(notification);
         }
         catch (Exception e)

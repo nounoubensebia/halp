@@ -1,6 +1,9 @@
 <%@ page import="data.Service" %>
 <%@ page import="data.User" %>
-<%@ page import="java.time.format.DateTimeFormatter" %><%--
+<%@ page import="java.time.format.DateTimeFormatter" %>
+<%@ page import="data.ServiceType" %>
+<%@ page import="java.util.List" %>
+<%@ page import="data.ServiceNature" %><%--
   Created by IntelliJ IDEA.
   User: noure
   Date: 15/02/2020
@@ -149,7 +152,8 @@
                                 %>
                                 <li>
                                     <div class="d-flex justify-content-start">
-
+                                        <% User currentUser = (User)session.getAttribute("user");
+                                        if (currentUser.getId()!=service.getUser().getId()){%>
                                             <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
                                                 <%if(service.isOffer()){
                                                 %>Accepter l'offre
@@ -158,7 +162,10 @@
                                                 <%}
                                                 %>
                                             </a>
-
+                                        <%}else{%>
+                                            <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Modifier Service</a>
+                                            <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
+                                        <%}%>
 
                                     </div>
                                 </li>
@@ -197,6 +204,84 @@
                             <button class="btn btn-unique" type="submit" >Envoyer <i class="fas fa-paper-plane-o ml-1"></i></button>
                         </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalContactForm2" role="dialog" aria-labelledby="myModalLabel2"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title w-100 font-weight-bold">Modifier Service</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body mx-3">
+                            <form method="POST" action="update-service">
+                                <div class="form-row mb-4">
+                                    <input name="service_id_edit" id="service_id_edit" value="<%out.print(service.getId());%>" hidden>
+                                    <div class="col">
+                                        <label class="mdb-main-label">Date début</label>
+                                        <div class="input-group date" id="datetimepicker7" data-target-input="nearest">
+                                            <input type="text" name="start_date" id="start_date" class="form-control datetimepicker-input" data-target="#datetimepicker7" value="<%out.print(service.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%>" required/>
+                                            <div class="input-group-append" data-target="#datetimepicker7" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col">
+                                        <label class="mdb-main-label">Date fin</label>
+                                        <div class="input-group date" id="datetimepicker8" data-target-input="nearest">
+                                            <input type="text" name="end_date" id="end_date" class="form-control datetimepicker-input" data-target="#datetimepicker8" value="<%out.print(service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%>" required/>
+                                            <div class="input-group-append" data-target="#datetimepicker8" data-toggle="datetimepicker">
+                                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <!-- Localisation -->
+                                <label class="mdb-main-label">Adresse</label>
+                                <input type="text" name="province" id="province" class="form-control mb-2" placeholder="Département" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(service.getLocation().getProvince());%>" required>
+                                <input type="text" name="city" id="city" class="form-control mb-2" placeholder="Ville" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(service.getLocation().getCity());%>" required>
+                                <input type="text" name="commune" id="commune" class="form-control mb-4" placeholder="Commune" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(service.getLocation().getCommune());%>" required>
+
+                                <!-- Description -->
+                                <label class="mdb-main-label">Description courte</label>
+                                <textarea name="short_description" id="short_description" class="form-control mb-4" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="2"  required><%out.print(service.getShortDescription());%></textarea>
+
+                                <label class="mdb-main-label">Description Détaillée</label>
+                                <textarea name="long_description" id="long_description" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required><%out.print(service.getLongDescription());%></textarea>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center">
+                            <button class="btn btn-deep-orange">Enregistrer</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modalContactForm3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Suppression du service</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Voulez-vous supprimer ce service?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-primary">Supprimer</button>
+                        </div>
                     </div>
                 </div>
             </div>

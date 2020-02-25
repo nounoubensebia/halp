@@ -9,7 +9,7 @@
 <!-- SCRIPTS -->
 <!-- JQuery -->
 <script type="text/javascript" src="${pageContext.request.contextPath}/Template/js/jquery-3.4.1.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/Template/js/moment.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/Template/js/moment-with-locales.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/Template/js/tempusdominus-bootstrap-4.min.js"></script>
 
 <!-- Bootstrap tooltips -->

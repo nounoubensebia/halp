@@ -73,9 +73,16 @@ public class UserBean extends Repository<User> {
 
     public void update(User user) throws TransactionException
     {
+        User user1 = findById(user.getId());
+        user1.setDescription(user.getDescription());
+        user1.setPhone(user.getPhone());
+        user1.getAddress().setCity(user.getAddress().getCity());
+        user1.getAddress().setSupplement(user.getAddress().getSupplement());
+        user1.getAddress().setStreet(user.getAddress().getStreet());
+
         try {
-            em.merge(user);
-            em.merge(user.getAddress());
+            em.merge(user1);
+            em.merge(user1.getAddress());
         } catch (Exception e)
         {
             TransactionException transactionException = new TransactionException("Transaction exception");
