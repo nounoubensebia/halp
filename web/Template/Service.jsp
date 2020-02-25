@@ -153,7 +153,13 @@
                                 <li>
                                     <div class="d-flex justify-content-start">
                                         <% User currentUser = (User)session.getAttribute("user");
-                                        if (currentUser.getId()!=service.getUser().getId()){%>
+                                        if (currentUser.isAdmin()){ %>
+                                        <form method="post" action="validate-service">
+                                            <input name="service_id_valider" id="service_id_valider" value="<%out.print(service.getId());%>" hidden>
+                                            <button class="btn btn-yellow" type="submit">Valider</button>
+                                        </form>
+                                        <%
+                                        }if (currentUser.getId()!=service.getUser().getId()){%>
                                             <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
                                                 <%if(service.isOffer()){
                                                 %>Accepter l'offre

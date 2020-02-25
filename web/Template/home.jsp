@@ -91,7 +91,7 @@ position:absolute;
               </a>
               <div class="dropdown-menu dropdown-menu-right dropdown-default"
                 aria-labelledby="navbarDropdownMenuLink-333">
-                <a class="dropdown-item" href="#">Mon profile</a>
+                <a class="dropdown-item" href="edit-account">Mon profile</a>
                 <a class="dropdown-item" href="My-Services">Mes Service</a>
                   <%if (user.isAdmin()){%>
                   <a class="dropdown-item" href="All-Services">Services à valider</a>

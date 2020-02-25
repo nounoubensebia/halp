@@ -23,13 +23,13 @@ public class EditAccountController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/Template/profile.jsp");
+        requestDispatcher.forward(req,resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getUser(req,userBean);
-        //super.doPost(req, resp);
         if (user ==null)
         {
             throw new ServletException();
@@ -50,18 +50,7 @@ public class EditAccountController extends HttpServlet {
         user.getAddress().setSupplement(supplement);
 
         userBean.update(user);
-        RequestDispatcher rd = req.getRequestDispatcher("Template/dashboard.html");
-        rd.forward(req,resp);
+        resp.sendRedirect("Servlet");
     }
 
-    @Override
-    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = Utils.getUser(req,userBean);
-        try {
-            userBean.deleteById(user.getId());
-            Utils.deleteUser(req,userBean);
-        } catch (TransactionException e) {
-            resp.sendError(500);
-        }
-    }
 }
