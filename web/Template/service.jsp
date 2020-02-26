@@ -3,13 +3,7 @@
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="data.ServiceType" %>
 <%@ page import="java.util.List" %>
-<%@ page import="data.ServiceNature" %><%--
-  Created by IntelliJ IDEA.
-  User: noure
-  Date: 15/02/2020
-  Time: 22:40
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="data.ServiceNature" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -39,62 +33,7 @@
     </style>
 </head>
 <body class="grey lighten-4">
-    <!--Main Navigation-->
-    <header>
-
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
-        <div class="container-fluid">
-
-            <!-- Brand -->
-            <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-                <strong class="blue-text">MDB</strong>
-            </a>
-
-            <!-- Collapse -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Links -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Right -->
-                <%if(session.getAttribute("user")!=null){
-                %>
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light" href="notifications"><%User user = (User)session.getAttribute("user");
-                            out.print(user.getUnseenNotifications().size());%>
-                            <i class="fas fa-bell"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                            <%
-                                out.print(user.getFirstName());%>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-default"
-                             aria-labelledby="navbarDropdownMenuLink-333">
-                            <a class="dropdown-item" href="#">Mon profile</a>
-                            <a class="dropdown-item" href="#">Mes Service</a>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </div>
-                    </li>
-                </ul>
-                <%}else{%>
-                <a href="signin" class="btn btn-outline-secondary ml-auto btn-md my-2 my-sm-0 ml-3" type="button" >Login</a>
-                <%}%>
-
-            </div>
-
-        </div>
-    </nav>
-    <!-- Navbar -->
-    </header>
-    <!--Main Navigation-->
+    <jsp:include page="header.jsp" />
     <main class="pt-5 mx-lg-5">
         <div class="container my-5">
 
@@ -296,18 +235,7 @@
             </div>
         </div>
     </main>
-    <!--Footer-->
-    <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
-
-        <!--Copyright-->
-        <div class="footer-copyright py-3">
-            © 2020 Copyright:
-            <a href="" target="_blank"> ServeurJava.com </a>
-        </div>
-        <!--/.Copyright-->
-
-    </footer>
-    <!--/.Footer-->
+    <jsp:include page="footer.jsp" />
     <jsp:include page="importsJS.jsp" />
 
 </body>

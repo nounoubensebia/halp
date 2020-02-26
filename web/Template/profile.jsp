@@ -152,7 +152,7 @@
                         <input type="text" name="user_name" id="user_name" class="form-control mb-4" placeholder="User name" aria-describedby="defaultRegisterFormUserNameHelpBlock" value="<%out.print(user.getUserName());%>" disabled  required>
 
                         <!-- Phone number -->
-                        <input type="number" name="phone" id="phone" class="form-control mb-4" placeholder="Téléphone" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(user.getPhone());%>" required>
+                        <input type="tel" pattern="[0-9]{10}" name="phone" id="phone" class="form-control mb-4" placeholder="Téléphone" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(user.getPhone());%>" required>
 
 
                         <!-- Address -->
