@@ -70,6 +70,6 @@ public class CreateServiceController extends HttpServlet {
                 isOffer,status,location,serviceType,serviceNature);
 
         serviceBean.save(service);
-        resp.sendRedirect("Servlet");
+        resp.sendRedirect("My-Services");
     }
 }

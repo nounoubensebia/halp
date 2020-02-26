@@ -3,13 +3,7 @@
 <%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ page import="data.ServiceType" %>
 <%@ page import="java.util.List" %>
-<%@ page import="data.ServiceNature" %><%--
-  Created by IntelliJ IDEA.
-  User: noure
-  Date: 15/02/2020
-  Time: 22:40
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="data.ServiceNature" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -39,62 +33,7 @@
     </style>
 </head>
 <body class="grey lighten-4">
-    <!--Main Navigation-->
-    <header>
-
-    <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
-        <div class="container-fluid">
-
-            <!-- Brand -->
-            <a class="navbar-brand waves-effect" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
-                <strong class="blue-text">MDB</strong>
-            </a>
-
-            <!-- Collapse -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <!-- Links -->
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <!-- Right -->
-                <%if(session.getAttribute("user")!=null){
-                %>
-                <ul class="navbar-nav ml-auto nav-flex-icons">
-                    <li class="nav-item">
-                        <a class="nav-link waves-effect waves-light" href="notifications"><%User user = (User)session.getAttribute("user");
-                            out.print(user.getUnseenNotifications().size());%>
-                            <i class="fas fa-bell"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                            <%
-                                out.print(user.getFirstName());%>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-default"
-                             aria-labelledby="navbarDropdownMenuLink-333">
-                            <a class="dropdown-item" href="#">Mon profile</a>
-                            <a class="dropdown-item" href="#">Mes Service</a>
-                            <a class="dropdown-item" href="#">Logout</a>
-                        </div>
-                    </li>
-                </ul>
-                <%}else{%>
-                <a href="signin" class="btn btn-outline-secondary ml-auto btn-md my-2 my-sm-0 ml-3" type="button" >Login</a>
-                <%}%>
-
-            </div>
-
-        </div>
-    </nav>
-    <!-- Navbar -->
-    </header>
-    <!--Main Navigation-->
+    <jsp:include page="header.jsp" />
     <main class="pt-5 mx-lg-5">
         <div class="container my-5">
 
@@ -109,75 +48,76 @@
                                 Service service = (Service) request.getAttribute("Service");
                             %>
 
-                            <h5 class="font-weight-normal mb-3">Description détaillée</h5>
+                            <h5 class="font-weight-normal mb-2"><%if(service.isOffer()){out.print("Offre de service");}else{out.print("Demande de service");}%></h5>
 
                             <p class="text-muted"><%out.print(service.getLongDescription());%></p>
 
-                            <ul class="list-unstyled font-small mt-5 mb-0">
-                                <li>
+                            <ul class="list-group list-group-horizontal font-small mt-4 mb-4">
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Référence</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getReference());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getReference());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Type</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getServiceType().getName());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getServiceType().getName());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Nature</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getServiceNature().getNature());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getServiceNature().getNature());%></p>
                                 </li>
 
-                                <li>
-                                    <p class="text-uppercase mb-2"><strong>Pseudonyme de l’utilisateur</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getUser().getUserName());%></p>
+                                <li class="list-group-item">
+                                    <p class="text-uppercase mb-2"><strong>Utilisateur</strong></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getUser().getUserName());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Valide jusqu'au</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Adresse</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getLocation().getProvince());%>, <%out.print(service.getLocation().getCity());%>, <%out.print(service.getLocation().getCommune());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getLocation().getProvince());%>, <%out.print(service.getLocation().getCity());%>, <%out.print(service.getLocation().getCommune());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Description courte</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getShortDescription());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getShortDescription());%></p>
                                 </li>
+                            </ul>
                                 <%if(session.getAttribute("user")!=null){
                                 %>
-                                <li>
-                                    <div class="d-flex justify-content-start">
-                                        <% User currentUser = (User)session.getAttribute("user");
-                                        if (currentUser.isAdmin()){ %>
-                                        <form method="post" action="validate-service">
-                                            <input name="service_id_valider" id="service_id_valider" value="<%out.print(service.getId());%>" hidden>
-                                            <button class="btn btn-yellow" type="submit">Valider</button>
-                                        </form>
-                                        <%
-                                        }if (currentUser.getId()!=service.getUser().getId()){%>
-                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
-                                                <%if(service.isOffer()){
-                                                %>Accepter l'offre
-                                                <%}else{
-                                                %>Proposer votre service
-                                                <%}
-                                                %>
-                                            </a>
-                                        <%}else{%>
-                                            <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Modifier Service</a>
-                                            <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
-                                        <%}%>
 
-                                    </div>
-                                </li>
+                                <div class="d-flex justify-content-start">
+                                    <% User currentUser = (User)session.getAttribute("user");
+                                    if (currentUser.isAdmin() && service.getStatus()==0){ %>
+                                    <form method="post" action="validate-service">
+                                        <input name="service_id_valider" id="service_id_valider" value="<%out.print(service.getId());%>" hidden>
+                                        <button class="btn btn-yellow" type="submit">Valider</button>
+                                    </form>
+                                    <%
+                                    }if (currentUser.getId()!=service.getUser().getId()){%>
+                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
+                                            <%if(service.isOffer()){
+                                            %>Accepter l'offre
+                                            <%}else{
+                                            %>Proposer votre service
+                                            <%}
+                                            %>
+                                        </a>
+                                    <%}else{%>
+                                        <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Modifier Service</a>
+                                        <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
+                                    <%}%>
+
+                                </div>
+
                                 <%}%>
 
-                            </ul>
+
 
                         </div>
 
@@ -296,18 +236,7 @@
             </div>
         </div>
     </main>
-    <!--Footer-->
-    <footer class="page-footer text-center font-small primary-color-dark darken-2 mt-4 wow fadeIn">
-
-        <!--Copyright-->
-        <div class="footer-copyright py-3">
-            © 2020 Copyright:
-            <a href="" target="_blank"> ServeurJava.com </a>
-        </div>
-        <!--/.Copyright-->
-
-    </footer>
-    <!--/.Footer-->
+    <jsp:include page="footer.jsp" />
     <jsp:include page="importsJS.jsp" />
 
 </body>
