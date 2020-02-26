@@ -47,13 +47,26 @@
             <div class="card mb-4">
 
                 <div class="list-group">
-                    <% User user = (User)session.getAttribute("user");
-                        List<Notification> notifications = (List<Notification>)request.getAttribute("unseenNotifications");
-                        for (Notification notification:notifications) {
+                    <%
+                        List<Notification> unseenNotifications = (List<Notification>)request.getAttribute("unseenNotifications");
+                        for (Notification notification:unseenNotifications) {
                     %>
-                    <a href="#!" class="list-group-item list-group-item-action flex-column align-items-start disabled">
+                    <a href="#!" class="list-group-item list-group-item-info flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-2 h5">Le <%out.print(notification.getLocalDateTime());%></h5>
+                            <h5 class="mb-2 h5">Le <%out.print(notification.getLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")));%></h5>
+                        </div>
+                        <p class="mb-2"><%out.print(notification.getMessage());%></p>
+                    </a>
+                    <%}%>
+                </div>
+                <div class="list-group" aria-disabled="true">
+                    <%
+                        List<Notification> seenNotifications = (List<Notification>)request.getAttribute("seenNotifications");
+                        for (Notification notification:seenNotifications) {
+                    %>
+                    <a href="#!" class="list-group-item list-group-item-dark flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-2 h5">Le <%out.print(notification.getLocalDateTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></h5>
                         </div>
                         <p class="mb-2"><%out.print(notification.getMessage());%></p>
                     </a>

@@ -48,75 +48,76 @@
                                 Service service = (Service) request.getAttribute("Service");
                             %>
 
-                            <h5 class="font-weight-normal mb-3">Description détaillée</h5>
+                            <h5 class="font-weight-normal mb-2"><%if(service.isOffer()){out.print("Offre de service");}else{out.print("Demande de service");}%></h5>
 
                             <p class="text-muted"><%out.print(service.getLongDescription());%></p>
 
-                            <ul class="list-unstyled font-small mt-5 mb-0">
-                                <li>
+                            <ul class="list-group list-group-horizontal font-small mt-4 mb-4">
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Référence</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getReference());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getReference());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Type</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getServiceType().getName());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getServiceType().getName());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Nature</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getServiceNature().getNature());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getServiceNature().getNature());%></p>
                                 </li>
 
-                                <li>
-                                    <p class="text-uppercase mb-2"><strong>Pseudonyme de l’utilisateur</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getUser().getUserName());%></p>
+                                <li class="list-group-item">
+                                    <p class="text-uppercase mb-2"><strong>Utilisateur</strong></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getUser().getUserName());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Valide jusqu'au</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Adresse</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getLocation().getProvince());%>, <%out.print(service.getLocation().getCity());%>, <%out.print(service.getLocation().getCommune());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getLocation().getProvince());%>, <%out.print(service.getLocation().getCity());%>, <%out.print(service.getLocation().getCommune());%></p>
                                 </li>
 
-                                <li>
+                                <li class="list-group-item">
                                     <p class="text-uppercase mb-2"><strong>Description courte</strong></p>
-                                    <p class="text-muted mb-4"><%out.print(service.getShortDescription());%></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getShortDescription());%></p>
                                 </li>
+                            </ul>
                                 <%if(session.getAttribute("user")!=null){
                                 %>
-                                <li>
-                                    <div class="d-flex justify-content-start">
-                                        <% User currentUser = (User)session.getAttribute("user");
-                                        if (currentUser.isAdmin()){ %>
-                                        <form method="post" action="validate-service">
-                                            <input name="service_id_valider" id="service_id_valider" value="<%out.print(service.getId());%>" hidden>
-                                            <button class="btn btn-yellow" type="submit">Valider</button>
-                                        </form>
-                                        <%
-                                        }if (currentUser.getId()!=service.getUser().getId()){%>
-                                            <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
-                                                <%if(service.isOffer()){
-                                                %>Accepter l'offre
-                                                <%}else{
-                                                %>Proposer votre service
-                                                <%}
-                                                %>
-                                            </a>
-                                        <%}else{%>
-                                            <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Modifier Service</a>
-                                            <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
-                                        <%}%>
 
-                                    </div>
-                                </li>
+                                <div class="d-flex justify-content-start">
+                                    <% User currentUser = (User)session.getAttribute("user");
+                                    if (currentUser.isAdmin() && service.getStatus()==0){ %>
+                                    <form method="post" action="validate-service">
+                                        <input name="service_id_valider" id="service_id_valider" value="<%out.print(service.getId());%>" hidden>
+                                        <button class="btn btn-yellow" type="submit">Valider</button>
+                                    </form>
+                                    <%
+                                    }if (currentUser.getId()!=service.getUser().getId()){%>
+                                        <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
+                                            <%if(service.isOffer()){
+                                            %>Accepter l'offre
+                                            <%}else{
+                                            %>Proposer votre service
+                                            <%}
+                                            %>
+                                        </a>
+                                    <%}else{%>
+                                        <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Modifier Service</a>
+                                        <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
+                                    <%}%>
+
+                                </div>
+
                                 <%}%>
 
-                            </ul>
+
 
                         </div>
 

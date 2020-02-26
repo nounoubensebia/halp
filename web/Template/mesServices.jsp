@@ -73,19 +73,21 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <%
-                                List<Service> mesServices = (List<Service>)request.getAttribute("mesServices");
-                                for (Service service:mesServices) {
-                                    out.print("<tr>\n" +
-                                            "                            <td>"+service.getShortDescription()+"</td>\n" +
-                                            "                            <td>"+service.isOffer()+"</td>\n" +
-                                            "                            <td>"+service.getStatus()+"</td>\n" +
-                                            "                            <td>\n" +
-                                            "                                <a class=\"btn-floating btn-sm btn-default\" href=\"service?service_id="+service.getId()+"\"><i class=\"fas fa-angle-right\"></i></a>\n" +
-                                            "                            </td>\n" +
-                                            "                            </tr>");
-                                }
-                            %>
+                            <%  List<Service> mesServices = (List<Service>)request.getAttribute("mesServices");
+                                for (Service service:mesServices) {%>
+                                   <tr>
+                                       <td><%out.print(service.getShortDescription());%></td>
+                                       <% if(service.isOffer()){%> <td class="text-success">Offre</td><%}else{%> <td class="text-warning">Demande</td> <%}%>
+                                       <td><% if(service.getStatus()==0){%> <p class="text-warning">A_VALIDER</p>
+                                           <%}if(service.getStatus()==1){%> <p class="text-success">VALIDE</p>
+                                           <%}if(service.getStatus()==2){%> <p class="text-danger">EN_COURS</p>
+                                           <%}if(service.getStatus()==3){%> <p class="text-dark">OBSOLETE</p><%}%>
+                                       </td>
+                                       <td>
+                                           <a class="btn-floating btn-sm btn-default" href="service?service_id=<%out.print(service.getId());%>"><i class="fas fa-angle-right"></i></a>
+                                       </td>
+                                   </tr>
+                               <%}%>
                             </tbody>
                         </table>
 
