@@ -40,7 +40,7 @@ public class EditServiceController extends HttpServlet {
         service.setLocation(location);
 
         serviceBean.update(service);
-        resp.sendRedirect("Servlet");
+        resp.sendRedirect("service?service_id="+service.getId());
 
     }
 }

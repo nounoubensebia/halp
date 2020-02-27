@@ -29,12 +29,13 @@ public class DeleteServiceController extends HttpServlet {
         if (user.isAdmin())
         {
             serviceBean.adminDelete(Long.parseLong(req.getParameter("service_id_delete")));
+            resp.sendRedirect("All-Services");
         }else{
 
             serviceBean.deleteById(Long.parseLong(req.getParameter("service_id_delete")));
+            resp.sendRedirect("My-Services");
 
         }
 
-        resp.sendRedirect("Servlet");
     }
 }

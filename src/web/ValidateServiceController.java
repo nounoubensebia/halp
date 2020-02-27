@@ -33,7 +33,7 @@ public class ValidateServiceController extends HttpServlet {
         }
         Service service = serviceBean.findById(Long.parseLong(req.getParameter("service_id_valider")));
         serviceBean.validate(service);
-        resp.sendRedirect("Servlet");
+        resp.sendRedirect("service?service_id="+service.getId());
 
     }
 
