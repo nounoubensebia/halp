@@ -70,7 +70,7 @@
                         </div>
 
                         <!-- E-mail -->
-                        <input type="email" name="email" id="email" class="form-control mb-4" placeholder="E-mail" value="<%out.print(user.getEmail());%>" disabled required>
+                        <input pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" id="email" class="form-control mb-4" placeholder="E-mail" value="<%out.print(user.getEmail());%>" disabled required>
                         <%
                             if (request.getAttribute("error-email")!=null)
                                 out.print("<small class=\"form-text red-text mb-4\">\n" +
@@ -93,7 +93,7 @@
                         <!-- Address -->
                         <input type="text" name="street" id="street" class="form-control mb-4" placeholder="Street" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(user.getAddress().getStreet());%>" required>
                         <input type="text" name="city" id="city" class="form-control mb-4" placeholder="City" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(user.getAddress().getCity());%>" required>
-                        <input type="text" name="supplement" id="supplement" class="form-control mb-4" placeholder="Supplement" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(user.getAddress().getSupplement());%>" required>
+                        <input type="text" name="supplement" id="supplement" class="form-control mb-4" placeholder="Complement" aria-describedby="defaultRegisterFormPhoneHelpBlock" value="<%out.print(user.getAddress().getSupplement());%>" required>
                         <!-- Description -->
                         <textarea name="description" id="description" class="form-control" placeholder="Description" aria-describedby="defaultRegisterFormDescHelpBlock" required><%out.print(user.getDescription());%></textarea>
 

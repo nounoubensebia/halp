@@ -74,12 +74,17 @@
                                 </li>
 
                                 <li class="list-group-item">
-                                    <p class="text-uppercase mb-2"><strong>Valide jusqu'au</strong></p>
+                                    <p class="text-uppercase mb-2"><strong>Date debut</strong></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <p class="text-uppercase mb-2"><strong>Date fin</strong></p>
                                     <p class="text-muted mb-2"><%out.print(service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
                                 </li>
 
                                 <li class="list-group-item">
-                                    <p class="text-uppercase mb-2"><strong>Adresse</strong></p>
+                                    <p class="text-uppercase mb-2"><strong>Localisation</strong></p>
                                     <p class="text-muted mb-2"><%out.print(service.getLocation().getProvince());%>, <%out.print(service.getLocation().getCity());%>, <%out.print(service.getLocation().getCommune());%></p>
                                 </li>
 
@@ -98,17 +103,19 @@
                                         <input name="service_id_valider" id="service_id_valider" value="<%out.print(service.getId());%>" hidden>
                                         <button class="btn btn-yellow" type="submit">Valider</button>
                                     </form>
+                                    <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
                                     <%
-                                    }if (currentUser.getId()!=service.getUser().getId()){%>
+                                    }if (currentUser.getId()!=service.getUser().getId()){
+                                        if (service.getStatus()==1){%>
                                         <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm">
                                             <%if(service.isOffer()){
                                             %>Accepter l'offre
                                             <%}else{
-                                            %>Proposer votre service
+                                            %>Proposer le service
                                             <%}
                                             %>
                                         </a>
-                                    <%}else{%>
+                                    <%}}else{%>
                                         <a href="" class="btn btn-success btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm2">Modifier Service</a>
                                         <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
                                     <%}%>
@@ -116,8 +123,6 @@
                                 </div>
 
                                 <%}%>
-
-
 
                         </div>
 
@@ -204,7 +209,27 @@
                                 <textarea name="long_description" id="long_description" class="form-control" placeholder="" aria-describedby="defaultRegisterFormDescHelpBlock" rows="5" required><%out.print(service.getLongDescription());%></textarea>
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
-                            <button class="btn btn-deep-orange" type="submit">Enregistrer</button>
+                            <button type="button" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm7">Enregistrer</button>
+                        </div>
+                        <div class="modal fade left" id="modalContactForm7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel2">Modification du service</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Voulez-vous enregistrer les modifications ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                        <button class="btn btn-primary" type="submit">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         </form>
                     </div>
@@ -213,7 +238,7 @@
 
             <div class="modal fade" id="modalContactForm3" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                  aria-hidden="true">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog modal-notify modal-danger" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title" id="exampleModalLabel">Suppression du service</h5>
@@ -222,13 +247,22 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            Voulez-vous supprimer ce service?
+                            <form method="post" action="delete-service">
+                            <p>Voulez-vous supprimer ce service?</p>
+                            <%User currentUser = (User)session.getAttribute("user");
+                              if (currentUser.isAdmin()){%>
+                            <div class="md-form">
+                                <i class="fas fa-pencil prefix grey-text"></i>
+                                <textarea type="text" name="messageSupprimer" id="messageSupprimer" class="md-textarea form-control" rows="4"></textarea>
+                                <label data-error="wrong" data-success="right" for="messageSupprimer">Votre message</label>
+                            </div>
+                            <%}%>
                         </div>
                         <div class="modal-footer">
-                            <form method="post" action="delete-service">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+
+                                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Annuler</button>
                                 <input name="service_id_delete" id="service_id_delete" value="<%out.print(service.getId());%>" hidden>
-                                <button class="btn btn-primary" type="submit">Supprimer</button>
+                                <button class="btn btn-danger" type="submit">Supprimer</button>
                             </form>
                         </div>
                     </div>

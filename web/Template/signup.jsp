@@ -59,7 +59,7 @@ position:absolute;
                         </div>
 
                         <!-- E-mail -->
-                        <input type="email" name="email" id="email" class="form-control mb-4" placeholder="E-mail" required>
+                        <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" name="email" id="email" class="form-control mb-4" placeholder="E-mail" required>
                         <%
                             if (request.getAttribute("error-email")!=null)
                                 out.print("<small class=\"form-text red-text mb-4\">\n" +
@@ -82,7 +82,7 @@ position:absolute;
                         <!-- Address -->
                         <input type="text" name="street" id="street" class="form-control mb-4" placeholder="Street" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
                         <input type="text" name="city" id="city" class="form-control mb-4" placeholder="City" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
-                        <input type="text" name="supplement" id="supplement" class="form-control mb-4" placeholder="Supplement" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
+                        <input type="text" name="supplement" id="supplement" class="form-control mb-4" placeholder="Complement" aria-describedby="defaultRegisterFormPhoneHelpBlock" required>
                         <!-- Description -->
                         <textarea name="description" id="description" class="form-control" placeholder="Description" aria-describedby="defaultRegisterFormDescHelpBlock" required></textarea>
                         <small id="defaultRegisterFormPasswordHelpBlock" class="form-text text-muted mb-4">
