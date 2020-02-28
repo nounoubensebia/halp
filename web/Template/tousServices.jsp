@@ -70,8 +70,7 @@
                             for (Service service:tousServices) {%>
                         <tr>
                             <td><%out.print(service.getReference());%></td>
-                            <% if(service.isOffer()){%> <td class="text-success">Offre</td><%}else{%> <td class="text-warning">Demande</td> <%}%>
-                            <td><% if(service.getStatus()==0){%> <p class="text-warning">A_VALIDER</p>
+                                <% if(service.isOffer()){%> <td><button type="button" class="btn btn-success btn-sm m-0">Offre</button></td><%}else{%> <td><button type="button" class="btn btn-warning btn-sm m-0">Demande</button></td> <%}%>                            <td><% if(service.getStatus()==0){%> <p class="text-warning">A_VALIDER</p>
                                 <%}if(service.getStatus()==1){%> <p class="text-success">VALIDE</p>
                                 <%}if(service.getStatus()==2){%> <p class="text-danger">EN_COURS</p>
                                 <%}if(service.getStatus()==3){%> <p class="text-dark">OBSOLETE</p><%}%>
