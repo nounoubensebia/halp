@@ -27,7 +27,7 @@ public class ValidateServiceController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getUser(req,userBean);
-        if (user==null||!user.isAdmin())
+        if (!Utils.checkSecurity(2,req,userBean))
         {
             throw new SecurityException();
         }

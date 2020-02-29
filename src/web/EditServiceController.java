@@ -22,9 +22,18 @@ public class EditServiceController extends HttpServlet {
     @EJB
     ServiceBean serviceBean;
 
+    @EJB
+    UserBean userBean;
+
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
+
+        if (!Utils.checkSecurity(1,req,userBean))
+        {
+            throw new SecurityException();
+        }
+
         Service service = serviceBean.findById(Long.parseLong(req.getParameter("service_id_edit")));
         DateTimeFormatter formatter = DateUtils.getStandardFormatter();
         LocalDateTime startDate =  LocalDate.parse(req.getParameter("start_date"),formatter).atStartOfDay();

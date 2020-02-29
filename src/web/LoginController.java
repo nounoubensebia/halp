@@ -25,7 +25,7 @@ public class LoginController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (Utils.getUser(req,userBean)!=null)
         {
-            resp.sendRedirect("/Servlet");
+            resp.sendRedirect("Servlet");
         }
         RequestDispatcher rd = req.getRequestDispatcher("Template/signin.jsp");
         rd.forward(req,resp);
@@ -35,7 +35,7 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if (Utils.getUser(req,userBean)!=null)
         {
-            resp.sendRedirect("/Servlet");
+            resp.sendRedirect("Servlet");
         }
         String email = req.getParameter("email");
         String password = req.getParameter("password");

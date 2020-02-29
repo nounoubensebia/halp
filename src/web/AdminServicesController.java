@@ -17,12 +17,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/All-Services")
-public class AllServicesController extends HttpServlet {
+public class AdminServicesController extends HttpServlet {
     @EJB
     ServiceBean serviceBean;
 
+    @EJB
+    UserBean userBean;
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+        if (!Utils.checkSecurity(2,req,userBean))
+        {
+            throw new SecurityException();
+        }
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("Template/tousServices.jsp");
         List<Service> services = serviceBean.getAll();
         List<Service> AValiderServices = getAValiderServices(services);

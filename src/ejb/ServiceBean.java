@@ -1,9 +1,6 @@
 package ejb;
 
-import data.Notification;
-import data.Service;
-import data.ServiceValidationNotification;
-import data.User;
+import data.*;
 
 import javax.annotation.Resource;
 import javax.ejb.*;
@@ -163,7 +160,7 @@ public class ServiceBean extends Repository<Service> {
         }
     }
 
-    public void adminDelete(long id) throws TransactionException
+    public void adminDelete(long id, String adminMessage) throws TransactionException
     {
         try {
             String message = "Votre ";
@@ -177,7 +174,10 @@ public class ServiceBean extends Repository<Service> {
                 message += "demande de service ";
             }
             message+="ayant pour référence "+service.getReference()+" a été supprimée par l'administrateur";
-            Notification notification = new Notification(service.getUser(),LocalDateTime.now(),message);
+            message+=" pour le motif suivant : "+adminMessage;
+            Notification notification = new ServiceDeletionNotification(service.getUser(),
+                    LocalDateTime.now(),message,adminMessage);
+            //Notification notification = new Notification(service.getUser(),LocalDateTime.now(),message);
             em.persist(notification);
             em.remove(service);
         }

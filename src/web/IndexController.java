@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet("/Servlet")
-public class IndexServlet extends HttpServlet {
+public class IndexController extends HttpServlet {
 
     @EJB
     ServiceBean serviceBean;

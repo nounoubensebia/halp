@@ -27,6 +27,10 @@ public class MyServicesController extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("Template/mesServices.jsp");
         User user = Utils.getUser(req,userBean);
+        if (!Utils.checkSecurity(1,req,userBean))
+        {
+            throw new SecurityException();
+        }
         List<Service> serviceList = serviceBean.getUserServices(user);
         req.setAttribute("mesServices",serviceList);
         requestDispatcher.forward(req,resp);

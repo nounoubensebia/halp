@@ -23,6 +23,10 @@ public class EditAccountController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (!Utils.checkSecurity(1,req,userBean))
+        {
+            throw new SecurityException();
+        }
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/Template/profile.jsp");
         requestDispatcher.forward(req,resp);
     }
@@ -30,9 +34,9 @@ public class EditAccountController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getUser(req,userBean);
-        if (user ==null)
+        if (!Utils.checkSecurity(1,req,userBean))
         {
-            throw new ServletException();
+            throw new SecurityException();
         }
 
         String phone = req.getParameter("phone");

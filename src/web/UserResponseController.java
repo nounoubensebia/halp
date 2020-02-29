@@ -32,6 +32,10 @@ public class UserResponseController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getUser(req,userBean);
+        if (!Utils.checkSecurity(1,req,userBean))
+        {
+            throw new SecurityException();
+        }
         Service service = serviceBean.findById(Long.parseLong(req.getParameter("service_id")));
         String message = req.getParameter("message");
         LocalDateTime dateTime = LocalDateTime.now();
@@ -39,6 +43,8 @@ public class UserResponseController extends HttpServlet {
         if (service.getStatus()!=1)
         {
             //TODO show error message
+            req.setAttribute("message","Un utilisateur a deja répondu à cette offre/demande");
+            req.getRequestDispatcher("/Template/error_message").forward(req,resp);
             return;
         }
 

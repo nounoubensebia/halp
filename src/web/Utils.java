@@ -8,6 +8,11 @@ import javax.servlet.http.HttpServletRequest;
 
 public class Utils {
 
+
+    public static final int SECURITY_MEMBER = 0;
+    public static final int SECURITY_USER = 1;
+    public static final int SECURITY_ADMIN = 2;
+
     public static User getUser(HttpServletRequest req, UserBean userBean)
     {
         //return
@@ -27,6 +32,23 @@ public class Utils {
 
     }
 
-
+    public static boolean checkSecurity(int securityRequired, HttpServletRequest req,
+                                        UserBean userBean)
+    {
+        User user = getUser(req,userBean);
+        int actualSecurity = 0;
+        if (user != null)
+        {
+            if (user.isAdmin())
+            {
+                actualSecurity = 2;
+            }
+            else
+            {
+                actualSecurity = 1;
+            }
+        }
+        return actualSecurity>=securityRequired;
+    }
 
 }

@@ -28,7 +28,8 @@ public class DeleteServiceController extends HttpServlet {
         User user = Utils.getUser(req,userBean);
         if (user.isAdmin())
         {
-            serviceBean.adminDelete(Long.parseLong(req.getParameter("service_id_delete")));
+            String messageSupp = req.getParameter("messageSupprimer");
+            serviceBean.adminDelete(Long.parseLong(req.getParameter("service_id_delete")),messageSupp);
             resp.sendRedirect("All-Services");
         }else{
 

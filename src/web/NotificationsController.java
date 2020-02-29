@@ -26,6 +26,10 @@ public class NotificationsController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getUser(req,userBean);
+        if (!Utils.checkSecurity(1,req,userBean))
+        {
+            throw new SecurityException();
+        }
         List<Notification> seenNotifications = user.getSeenNotifications();
         List<Notification> unseenNotifications = user.getUnseenNotifications();
         Collections.sort(seenNotifications, new Comparator<Notification>() {

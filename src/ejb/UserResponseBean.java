@@ -60,7 +60,7 @@ public class UserResponseBean extends Repository<UserResponse> {
 
             //saving user response notification
             String message = "L'utilisateur ayant les informations suivantes<br>" + userResponse.getUser().getNotificationInfo()
-                    + " a répondu à votre ";
+                    + "<br>a répondu à votre ";
             if (userResponse.getService().isOffer()) {
                 message += "offre de service ayant pour référence "+userResponse.getService().getReference();
             } else {

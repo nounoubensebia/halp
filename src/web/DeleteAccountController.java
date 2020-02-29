@@ -21,6 +21,10 @@ public class DeleteAccountController extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         User user = Utils.getUser(req,userBean);
+        if (!Utils.checkSecurity(1,req,userBean))
+        {
+            throw new SecurityException();
+        }
         userBean.deleteById(user.getId());
         resp.sendRedirect("logout");
     }
