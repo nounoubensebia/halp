@@ -74,12 +74,17 @@
                                 </li>
 
                                 <li class="list-group-item">
-                                    <p class="text-uppercase mb-2"><strong>Valide jusqu'au</strong></p>
+                                    <p class="text-uppercase mb-2"><strong>Date debut</strong></p>
+                                    <p class="text-muted mb-2"><%out.print(service.getStartDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
+                                </li>
+
+                                <li class="list-group-item">
+                                    <p class="text-uppercase mb-2"><strong>Date fin</strong></p>
                                     <p class="text-muted mb-2"><%out.print(service.getEndDate().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));%></p>
                                 </li>
 
                                 <li class="list-group-item">
-                                    <p class="text-uppercase mb-2"><strong>Adresse</strong></p>
+                                    <p class="text-uppercase mb-2"><strong>Localisation</strong></p>
                                     <p class="text-muted mb-2"><%out.print(service.getLocation().getProvince());%>, <%out.print(service.getLocation().getCity());%>, <%out.print(service.getLocation().getCommune());%></p>
                                 </li>
 
@@ -98,6 +103,7 @@
                                         <input name="service_id_valider" id="service_id_valider" value="<%out.print(service.getId());%>" hidden>
                                         <button class="btn btn-yellow" type="submit">Valider</button>
                                     </form>
+                                    <a href="" class="btn btn-danger btn-rounded mb-4" data-toggle="modal" data-target="#modalContactForm3">Supprimer Service</a>
                                     <%
                                     }if (currentUser.getId()!=service.getUser().getId()){
                                         if (service.getStatus()==1){%>
@@ -105,7 +111,7 @@
                                             <%if(service.isOffer()){
                                             %>Accepter l'offre
                                             <%}else{
-                                            %>Proposer votre service
+                                            %>Proposer le service
                                             <%}
                                             %>
                                         </a>
